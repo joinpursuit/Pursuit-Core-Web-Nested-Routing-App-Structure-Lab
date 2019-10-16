@@ -2,6 +2,20 @@
 
 Build a backend for a recipe API. It should have the following functionality:
 
+## Planning
+
+* Think about what are you your main endpoints.
+* What endpoints will be nested under other endpoints
+* What type of request you will want to accept at a given endpoint: `GET`, `POST`, `PUT`?
+* What data would you need to provide to your endpoints.
+    * Any URL or Query parameters in you endpoints?
+    * Body data?
+* What should your endpoint return/respond with.
+
+Optionally, in a file called `docs.md` plan and document your API before you start coding. You could do something [like this](https://github.com/alejo4373/PCW62-Todos-API#endpoints) or simpler.
+
+## Data Models
+
 ### Recipes
 
 - Add a recipe
