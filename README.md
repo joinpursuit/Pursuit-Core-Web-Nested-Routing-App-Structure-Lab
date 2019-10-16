@@ -26,15 +26,19 @@ A recipe object should look like this:
 
 ### Users
 
-```js
-    username: "user1234",
-    email: "user1234@gmail.com",
-    activationDate: "January 1, 1970"
-```
-
 - Add a user
 - Remove a user
 - Update a user
 - Delete a user
 - Get all users
-- Get all users with an activation date in a given range
+- Get all users with an activation date in a given range. Say we want all the users that where activated between 2019
+
+A user object should look like this:
+
+```js 
+{
+    username: "user1234",
+    email: "user1234@gmail.com",
+    activationDate: "January 1, 1970"
+}
+```
