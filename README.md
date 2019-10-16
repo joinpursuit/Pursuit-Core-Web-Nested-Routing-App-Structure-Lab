@@ -19,7 +19,6 @@ Optionally, in a file called `docs.md` plan and document your API before you sta
 ### Recipes
 
 - Add a recipe
-- Remove a recipe
 - Update a recipe
 - Delete a recipe
 - Get all recipes
