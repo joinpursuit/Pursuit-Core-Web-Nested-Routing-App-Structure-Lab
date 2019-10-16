@@ -55,3 +55,8 @@ A user object should look like this:
     activationDate: "January 1, 1970"
 }
 ```
+
+## Bonus
+* Implement `Users` and `Recipes` in an more object oriented fashion ala [Express-Project](https://github.com/joinpursuit/Pursuit-Core-Web-Express-Project) with classes and methods that are used in your route handlers/middleware.
+
+* Do you want to persist the data even after server resets? Look into how to save your data in JSON files to be stored in your disk here: [Node.js Write JSON Object to File](https://www.tutorialkart.com/nodejs/node-js-write-json-object-to-file/). 
