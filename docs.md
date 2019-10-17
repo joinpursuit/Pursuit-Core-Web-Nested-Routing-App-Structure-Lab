@@ -1,2 +1,13 @@
 - Create 2 main endpoints for Recipes and Users
-- 
+- Inside of the Recipes we need to do the following:
+    - Add a recipe (POST)
+    - Update a recipe (PATCH)
+    - Delete a recipe
+    - GET all recipes 
+    - GET all recipes matching an ingredient (using query ?indredient=${userinput})
+- Inside of the Users do the following:
+    - Add a user (POST)
+    - Remove a user (DELETE)
+    - Update a user (PATCH)
+    - GET all users
+    - GET all users with activation date in given range (use query)
