@@ -3,36 +3,39 @@ const express = require('express');
 const router = express.Router();
 
 
+let recipeArr = [];
 
 router.post('/add', (req, res) => {
-    let ingredients = req.body.ingredients
-    let name = req.body.name
-    let directions = req.body.directions
-    let recipeArr = [];
+    let nameV = req.body.name;
+    let ing = req.body.ing
+    let directionsV = req.body.directions;
 
-    let ingredientsArr = [];
-    let recipeObj;
+    let ingARR = []
+    ingARR.push(ing);
 
-    ingredientsArr.push(ingredients);
-
-    for (let i = 0; i < 50; i++) {
-        recipeObj = {
-            name: name,
-            ingredients: [],
-            directions: directions
-        }
+    let recipeObj = {
+        name: nameV,
+        ingredients: ingARR,
+        directions: directionsV
     }
 
     recipeArr.push(recipeObj)
     console.log(recipeArr);
-
-
-    res.json(recipeObj)
+    res.send(recipeObj)
 });
 
-router.get
+router.delete('/delete', (req, res) => {
+    let recipeName = req.query.name;
+    let filtered = recipeArr.filter(el => {
+        return el.name !== recipeName
+    })
+    res.send({
+        status: `Success operation successful`,
+        message: `${recipeName} has been successfully deleted`
+    })
+})
 
-
+router.get('/all')
 
 
 

@@ -18,13 +18,16 @@ router.post('/add', (req, res) => {
 });
 
 router.delete('/delete', (req, res) => {
-    let username = req.body.username;
-
+    let username = req.query.username;
+    let filtered = usersArray.filter(el => {
+        return el.name !== username
+    })
     res.send({
         status: `Success operation successful`,
         message: `${username} has been successfully deleted`
     })
 })
+
 
 router.patch('/update', (req, res) => {
     let user = req.body;
