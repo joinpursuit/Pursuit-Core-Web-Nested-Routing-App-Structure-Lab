@@ -35,7 +35,7 @@ const postRecipe = (req, res, next) => {
     let ingredientsArr = []
     let newIngredients = newRecipe.ingredients
 
-    let ingredients = newIngredients.split(" ")
+    let ingredients = newIngredients.split(",")
     ingredientsArr.push(ingredients)
 
     res.send({
