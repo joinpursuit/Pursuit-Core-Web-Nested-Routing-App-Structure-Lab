@@ -15,20 +15,35 @@ router.get('/all', (req, res) => {
     })
 })
 
-router.post(`/new_recipe`, (req, res) => {
+const validateInput = (req, res, next) =>{
     let newRecipe = req.body
-    let name = newRecipe.name
-    let ingredients = newRecipe.ingredients;
-    let directions = newRecipe.directions
+    
+    if(!newRecipe.name || !newRecipe.ingredients|| !newRecipe.directions){
+        res.send({
+            error: "missing information "
 
-res.send({
-    name: name,
-    ingredients: ingredients,
-    directions: directions
-})
-})
+        })
+    }else{
+        next()
+    }
+    console.log(newRecipe)
+}
 
 
+const postRecipe = (req, res, next) => {
+    let newRecipe = req.body;
+    let ingredientsArr = []
+    let newIngredients = newRecipe.ingredients
 
+    let ingredients = newIngredients.split(" ")
+    ingredientsArr.push(ingredients)
 
+    res.send({
+        name: newRecipe.name,
+        ingredients: ingredientsArr,
+        directions: newRecipe.directions
+    })
+  }
+
+router.post('/newRecipe', validateInput, postRecipe)
 module.exports = router;
