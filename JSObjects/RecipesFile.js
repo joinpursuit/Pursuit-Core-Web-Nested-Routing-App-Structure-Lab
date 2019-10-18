@@ -70,11 +70,19 @@ class Recipes {
         return arr;
     }
 
-    getRecipesByIngredient(ing) {
+    getRecipesByIngredient(ingArr) {
+        console.log(ingArr)
         let arr = [];
+        let tracker = {}
         for (let name in this.recipes) {
-            if (this.recipes[name].ingredients.includes(ing)) {
-                arr.push(this.recipes[name])
+            if (!tracker[name]) {
+                for (let ing of ingArr) {
+                    if (this.recipes[name].ingredients.includes(ing) 
+                        && !tracker[name]) {
+                            tracker[name] = true;
+                            arr.push(this.recipes[name])
+                    }
+                }
             }
         }
         return arr;

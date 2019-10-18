@@ -130,6 +130,30 @@ const deleteRecipe = (request, response) => {
     }
 }
 
+const returnAllRecipes = (request, response) => {
+    let arrayOfRecipes;
+    let filter = request.query.search;
+    if (filter) {
+        filter = filter.replace(/,/g, ' ').split(' ')
+        filter = filter.filter(element => element !== "");
+        arrayOfRecipes = allRecipes.getRecipesByIngredient(filter)   
+    } else {
+        arrayOfRecipes = allRecipes.getAllRecipes();
+    }
+
+    if (arrayOfRecipes.length) {
+        response.json({
+            status: 'success',
+            message: arrayOfRecipes
+        })
+    } else {
+        response.json({
+            status: 'no matches',
+            message: 'No match for your filter (Or Recipes file is empty)'
+        })
+    }
+}
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Add a recipe
 recipesRouter.post('/', log, checkValidRecipeBody, addARecipe)
@@ -140,11 +164,8 @@ recipesRouter.patch('/:recipeName', log, checkValidPartialRecipeBody, updateTheR
 // Delete a recipe
 recipesRouter.delete('/:recipeName', log, deleteRecipe)
 
-
-// Get all recipes
-
-// Get all recipes matching a given ingredient
-
+// Get all recipes AND // Get all recipes matching a given ingredient
+recipesRouter.get('/all', log, returnAllRecipes)
 
 
 
