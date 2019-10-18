@@ -1,7 +1,6 @@
 # API Docs
 
-Please refer to [this link](https://github.com/joinpursuit/Pursuit-Core-Web-Nested-Routing-App-Structure-Lab/blob/master/README.md) to read about what's required from us to build this API.  
-(if you have troubles to open the previous link, please try [this](https://github.com/AminesCodes/Pursuit-Core-Web-Nested-Routing-App-Structure-Lab/blob/master/README.md))
+Please refer to [README](https://github.com/AminesCodes/Pursuit-Core-Web-Nested-Routing-App-Structure-Lab/blob/master/README.md) to read about what's required from us to build this API.
 
 
 ## Resources:
@@ -16,8 +15,8 @@ Please refer to [this link](https://github.com/joinpursuit/Pursuit-Core-Web-Nest
 
 |Method	 |Endpoint                |Possible Query Parameters |
 |:-------|:----------------------:|:-------------------------|
-|GET	 |/recipes/all            |search=<`ingredient (or ingredients separated by a space or comma)`>                |
+|GET	 |/recipes/all            |search=<`ingredient (or ingredients separated by a space or comma)`> **optional**|
 |POST	 |/recipes                |name=<`recipe-name`>, ingredients=<`recipe ingredients (separated by space or comma)`>, directions=<`directions`>|
 |PATCH	 |/recipes/<`recipe-name`>|name=<`recipe-name`> and/or ingredients=<`recipe ingredients (separated by space or comma)`>, and/or directions=<`directions`>|
-|DELETE	 |/recipes/<`recipe-name`>|name=<`recipe-name`>|
+|DELETE	 |/recipes/<`recipe-name`>|                          |
 
