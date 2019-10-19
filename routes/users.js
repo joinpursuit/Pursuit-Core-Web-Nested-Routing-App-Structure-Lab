@@ -4,7 +4,7 @@ const router = express.Router();
 //this function will help me locate a recipe with a certain id number
 const getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
 
-let idCounter = 3;
+let idCounter = 4;
 
 let usersList = [
     {
@@ -24,7 +24,13 @@ let usersList = [
         username: "user1337",
         email: "user1337@gmail.com",
         activationDate: "January 3, 1937"
-    }
+    },
+    {
+        id: 4,
+        username: "Nope",
+        email: "nope@gmail.com",
+        activationDate: "March 1, 1970"
+    },
 ]
 
 const addUser = (req, res, next) => {
@@ -106,20 +112,24 @@ const printUsers = (rea, res, next) => {
     res.send(usersList);
 }
 
-// const compareIngredients = (req, res, next) => {
-//     let userIngredient = req.params.match;
+const findRange = (req, res, next) => {
+    let searchYear = req.params.yearRange;
 
-//     let matchedIngredients = [];
+    let range = [];
 
-//     for(let i = 0; i < recipesList.length; i++){
-//         // console.log(`Is ${userIngredient} inside?`, getKey(recipesList[i].ingredients, userIngredient));
-//         if(getKey(recipesList[i].ingredients, userIngredient)) {
-//             matchedIngredients.push(recipesList[i]);
-//         }
-//     }
-//     console.log('Matching Ingredients', matchedIngredients);
-//     res.json(matchedIngredients);
-// }
+    for(let i = 0; i < usersList.length; i++){
+        let splitItem = [];
+        splitItem.push(usersList[i].activationDate.split(" "))
+        // console.log("splitYear", splitItem[0][2])
+        // console.log("userYear", searchYear)
+
+        if(splitItem[0][2] === searchYear) {
+            console.log("find", usersList[i]);
+            range.push(usersList[i]);
+        }
+    }
+    res.json(range);
+}
 
 router.post("/add", addUser);
 
@@ -129,7 +139,7 @@ router.patch("/:updateUser", updateUsers);
 
 router.get("/", printUsers)
 
-// router.get("/:match", compareIngredients)
+router.get("/:yearRange", findRange)
 
 module.exports = router;
 
