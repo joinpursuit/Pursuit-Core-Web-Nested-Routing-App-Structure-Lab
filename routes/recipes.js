@@ -5,23 +5,33 @@ const Restaurant = require("../restaurant.js");
 
 let myRestaurant = new Restaurant();
 
-router.post("/add", (req, res) => {
-    let name = req.query.name;
-    let ingredients = req.query.ingredients;
-    let directions = req.query.directions;
-
-    myRestaurant.addRecipe(name, ingredients, directions);
-    res.json(myRestaurant.recipes)
+router.get("/:recipe", (req, res) => {
+    let recipe = req.params.recipe;
+    res.json(myRestaurant.getRecipe(recipe))
 })
 
-// router.patch("/update", (req, res) => {
-//     let name = req.query.name;
-//     let ingredients = req.query.ingredients.split(",");
-//     let directions = req.query.directions;
+router.post("/add", (req, res) => {
+    let name = req.body.name;
+    let ingredients = req.body.ingredients;
+    let directions = req.body.directions;
+
+    myRestaurant.addRecipe(name, ingredients, directions);
+    res.send(myRestaurant.recipes)
+    // res.json(myRestaurant.recipes)
+})
+
+router.patch("/:recipe", (req, res) => {
+    let targetRecipe = req.params.recipe
+    let name = req.body.name;
+    let ingredients = req.body.ingredients;
+    let directions = req.body.directions;
+
+    let answer = myRestaurant.updateRecipe(targetRecipe, name, ingredients, directions);
+    res.json(answer);
+
+    
+})
 
 
-
-
-// })
 
 module.exports = router;
