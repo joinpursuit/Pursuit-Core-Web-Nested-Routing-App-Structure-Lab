@@ -29,8 +29,6 @@ const createRecipe = (req, res, next) => {
     let ingredients =  newRecipe.ingredients
     const directions = newRecipe.directions
 
-
-    ingredients = new Array('one', 'two', 'three')
     res.json(newRecipe)
     recipes.push(newRecipe)
     console.log(newRecipe)
@@ -39,11 +37,29 @@ const createRecipe = (req, res, next) => {
 router.post('/add', createRecipe)
 
 //UPDATE
-const updateRecipe = (req, res) => {
-    res.send('This is a update')
+const updateDeleteRecipe = (req, res, next) => {
+    const deleteInput = req.params.name
+    console.log(deleteInput)
+    for (i = 0; i < recipes.length; i++){
+        if (recipes[i].name === deleteInput){
+            recipes.splice(i,1);
+        }
+    }
+    next()
 }
 
-router.put('/update/:name', updateRecipe)
+const updateAddRecipe = (req, res) => {
+    const newRecipe = req.body
+    const name = newRecipe.name
+    let ingredients =  newRecipe.ingredients
+    const directions = newRecipe.directions
+
+    res.json(newRecipe)
+    recipes.push(newRecipe)
+    console.log(newRecipe)
+}
+
+router.put('/update/:name', updateDeleteRecipe, updateAddRecipe)
 
 //DELETE
 

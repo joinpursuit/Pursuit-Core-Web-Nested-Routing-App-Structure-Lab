@@ -43,12 +43,28 @@ const deleteUser = (req, res) => {
 }
 router.delete('/delete/:username', deleteUser)
 
-const updateUser = (req, res) => {
-    const clearUser = deleteUser()
-    const createUser = addNewUser()
-    console.log(createUser)
+const updateDeleteUser = (req, res, next) => {
+    const username = req.params.username
+    console.log(username)
+    for (i = 0; i < users.length; i++){
+        if (users[i].username === username){
+            users.splice(i,1);
+        }
+    }
+    next()
 }
-router.put('/update',updateUser)
+
+const updateAddUser = (req, res) => {
+    const newUser = req.body
+    const username = newUser.username
+    const email = newUser.email
+    const activationDate = newUser.activationDate
+
+    console.log(newUser)
+    users.push(newUser)
+    res.json(newUser)
+}
+router.put('/update/:username',updateDeleteUser, updateAddUser)
 
 // const filterbyDate = (req, res, next) => {
 //     const activationDate = req.query.activationDate
