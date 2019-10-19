@@ -133,8 +133,6 @@ const updateTheUser = (request, response) => {
 
 const deleteUser = (request, response) => {
     let userToDelete = request.params.username;
-    console.log(userToDelete)
-
     let deletedUser = allUsers.deleteUser(userToDelete);
 
     if (deletedUser === -1) {
@@ -181,9 +179,9 @@ const returnAllUsers = (request, response) => {
     }
 
     if (start && end) {
-        arrayOfUsers = allUsers.getUsersByIngredient([start, end])
+        arrayOfUsers = allUsers.getUsersByIngredient(start, end)
     } else if (start) {
-        arrayOfUsers = allUsers.getUsersByIngredient([start])
+        arrayOfUsers = allUsers.getUsersByIngredient(start)
     } else {
         arrayOfUsers = allUsers.getAllUsers();
 
@@ -193,6 +191,11 @@ const returnAllUsers = (request, response) => {
         response.json({
             status: 'success',
             message: arrayOfUsers
+        })
+    } else if (arrayOfUsers === -1){
+        response.json({
+            status: 'failed',
+            message: 'Please double check your filter'
         })
     } else {
         response.json({

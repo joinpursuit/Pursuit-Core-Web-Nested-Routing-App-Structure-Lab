@@ -20,3 +20,13 @@ Please refer to [README](https://github.com/AminesCodes/Pursuit-Core-Web-Nested-
 |PATCH	 |/recipes/<`recipe-name`>|**Body**: name=<`recipe-name`> and/or ingredients=<`recipe ingredients (separated by space or comma)`>, and/or directions=<`directions`>|
 |DELETE	 |/recipes/<`recipe-name`>|                          |
 
+
+* **Users**:
+
+|Method	 |Endpoint                |Possible Query/Body Parameters |
+|:-------|:----------------------:|:-------------------------|
+|GET	 |/users/all            |**Query**:  **optional** startY=<`start year for the filter`>, startM=<`start month`>, startD=<`start day`>, endY=<`end year`>, endM=<`end month`>, endD=<`end day`> |
+|POST	 |/users                |**Body**: username=<`username`>, email=<`email-address`>|
+|PATCH	 |/users/<`username`>|**Body**: username=<`username`> and/or email=<`email-address`>|
+|DELETE	 |/users/<`username`>|                          |
+

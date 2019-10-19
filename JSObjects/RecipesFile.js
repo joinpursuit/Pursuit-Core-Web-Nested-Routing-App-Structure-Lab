@@ -66,6 +66,9 @@ class Recipes {
     }
 
     getRecipesByIngredient(ingArr) {
+        if (!ingArr) {
+            return -1;
+        }
         let arr = [];
         let tracker = {}
         for (let name in this.recipes) {

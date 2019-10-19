@@ -148,6 +148,11 @@ const returnAllRecipes = (request, response) => {
             status: 'success',
             message: arrayOfRecipes
         })
+    } else if (arrayOfRecipes === -1) {
+        response.json({
+            status: 'no matches',
+            message: 'Please double check your filter'
+        })
     } else {
         response.json({
             status: 'no matches',

@@ -40,7 +40,6 @@ A recipe object should look like this:
 ### Users
 
 - Add a user
-- Remove a user
 - Update a user
 - Delete a user
 - Get all users

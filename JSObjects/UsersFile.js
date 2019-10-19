@@ -2,7 +2,6 @@ class User {
     constructor (username, email, activationStamp) {
         this.username = username,
         this.email = email,
-        // this.activationStamp = activationStamp
         this.activationDate = `${new Date(activationStamp).getFullYear()}-${new Date(activationStamp).getMonth()}-${new Date(activationStamp).getDate()}`
     }
 }
@@ -32,7 +31,6 @@ class Users {
         const newUser = new User(username, email, now);
         this.users[username] = newUser;
         let userObject = this.users[username];
-        // delete userObject.activationStamp;
         return userObject;
     }
 
@@ -85,6 +83,9 @@ class Users {
     }
 
     getUsersByActivationDate(start, end) {
+        if (!start) {
+            return -1
+        }
         start = start.toString();
         start = new Date(start);
         end = end.toString();
@@ -100,10 +101,5 @@ class Users {
     }
 }
 
-// let rc = new Users();
-// let r1 = rc.addRecipe('mayo salad', [1,2,3], 'bla')
-// console.log('~~~~~~~~~~~~~~~~~~~~~~~\n', rc, '\n', r1, '~~~~~~~~~~~~~~~~~~~~~~~\n');
-// let r1m = rc.updateRecipe('mayo salad', 'name', 'mayonnaise salad')
-// console.log('~~~~~~~~~~~~~~~~~~~~~~~\n', rc, '\n', r1m, '~~~~~~~~~~~~~~~~~~~~~~~\n');
 
 module.exports = Users;
