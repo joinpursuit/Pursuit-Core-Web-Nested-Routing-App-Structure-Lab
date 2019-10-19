@@ -117,6 +117,21 @@ const deleteRecipe = (req, res, next) => {
     res.json(recipesList);
 }
 
+const compareIngredients = (req, res, next) => {
+    let userIngredient = req.params.match;
+
+    let matchedIngredients = [];
+
+    for(let i = 0; i < recipesList.length; i++){
+        // console.log(`Is ${userIngredient} inside?`, getKey(recipesList[i].ingredients, userIngredient));
+        if(getKey(recipesList[i].ingredients, userIngredient)) {
+            matchedIngredients.push(recipesList[i]);
+        }
+    }
+    console.log('Matching Ingredients', matchedIngredients);
+    res.json(matchedIngredients);
+}
+
 router.get("/", printRecipes)
 
 router.post("/add", addRecipe);
@@ -125,9 +140,7 @@ router.patch("/:updateID", updateRecipes);
 
 router.delete("/:deleteID", deleteRecipe);
 
-router.get("/:match", (req,res,next) => {
-    res.send(`Found recipes with ${req.originalUrl}`)
-})
+router.get("/:match", compareIngredients)
 
 module.exports = router;
 
