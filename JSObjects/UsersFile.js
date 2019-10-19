@@ -1,8 +1,9 @@
 class User {
-    constructor (username, email, activationStamp) {
+    constructor (username, email) {
+        let activationStamp = new Date();
         this.username = username,
         this.email = email,
-        this.activationDate = `${new Date(activationStamp).getFullYear()}-${new Date(activationStamp).getMonth()}-${new Date(activationStamp).getDate()}`
+        this.activationDate = `${activationStamp.getFullYear()}-${activationStamp.getMonth()+1}-${activationStamp.getDate()}`
     }
 }
 
@@ -12,7 +13,6 @@ class Users {
     }
 
     addUser(username, email) {
-        let now = Date.now();
         if (!username 
             || !email) {
                 return -1; // missing input
@@ -28,10 +28,9 @@ class Users {
             || !email.includes('.')) {
                 return -4; //invalid email
         }
-        const newUser = new User(username, email, now);
+        const newUser = new User(username, email);
         this.users[username] = newUser;
-        let userObject = this.users[username];
-        return userObject;
+        return this.users[username];
     }
 
     updateUser(username, key, value) {
@@ -83,19 +82,44 @@ class Users {
     }
 
     getUsersByActivationDate(start, end) {
-        if (!start) {
-            return -1
+    console.log("server", start, end)
+
+        if (!start || !end) {
+            return -1; // Missing element of the filter;
         }
-        start = start.toString();
-        start = new Date(start);
-        end = end.toString();
-        end = new Date(end);
-        console.log("\nStart and end", start, end, '\n')
-        
+
+        console.log(start.length, end.length)
+        if (start.length !== 10 || end.length !== 10) {
+            return -2; // wrong filter input
+        }
+        start = new Date(start).getTime();
+        end = new Date(end).getTime();
+        if (end < start) {
+            let temp = start;
+            start = end;
+            end = temp;
+        }
 
         let arr = [];
-        let tracker = {}
-
+        console.log(start, end)
+        
+        if (end === start) {
+            for (let user in this.users) {
+                let actDate = new Date(this.users[user].activationDate).getTime()
+                console.log(actDate)
+                if (actDate === start) {
+                    arr.push(this.users[user])
+                }
+            }
+        } else {
+            for (let user in this.users) {
+                let actDate = new Date(this.users[user].activationDate).getTime()
+                console.log(actDate)
+                if (actDate >= start && actDate <= end) {
+                    arr.push(this.users[user])
+                }
+            }
+        }
         
         return arr;
     }

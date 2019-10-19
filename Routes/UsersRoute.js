@@ -161,27 +161,25 @@ const returnAllUsers = (request, response) => {
 
     if (startYear) {
         start = '' + startYear;
-        if (startM) {
-            start += '-' + startM;
-            if (startD) {
-                start += '-' + startD;
+        if (startMonth) {
+            start += '-' + startMonth;
+            if (startDay) {
+                start += '-' + startDay;
             }
         }
     }
     if (endYear) {
         end = '' + endYear;
-        if (endM) {
-            end += '-' + endM;
-            if (endD) {
-                end += '-' + endD;
+        if (endMonth) {
+            end += '-' + endMonth;
+            if (endDay) {
+                end += '-' + endDay;
             }
         }
     }
 
-    if (start && end) {
-        arrayOfUsers = allUsers.getUsersByIngredient(start, end)
-    } else if (start) {
-        arrayOfUsers = allUsers.getUsersByIngredient(start)
+    if (start || end) {
+        arrayOfUsers = allUsers.getUsersByActivationDate(start, end)
     } else {
         arrayOfUsers = allUsers.getAllUsers();
 
@@ -193,6 +191,16 @@ const returnAllUsers = (request, response) => {
             message: arrayOfUsers
         })
     } else if (arrayOfUsers === -1){
+        response.json({
+            status: 'failed',
+            message: 'Please double check your filter, Start/End dates are required'
+        })
+    } else if (arrayOfUsers === -2){
+        response.json({
+            status: 'failed',
+            message: 'Please double check your filter, all parameters are required (year, month and day)'
+        })
+    } else if (arrayOfUsers === -3){
         response.json({
             status: 'failed',
             message: 'Please double check your filter'

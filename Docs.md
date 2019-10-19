@@ -25,7 +25,7 @@ Please refer to [README](https://github.com/AminesCodes/Pursuit-Core-Web-Nested-
 
 |Method	 |Endpoint                |Possible Query/Body Parameters |
 |:-------|:----------------------:|:-------------------------|
-|GET	 |/users/all            |**Query**:  **optional** startY=<`start year for the filter`>, startM=<`start month`>, startD=<`start day`>, endY=<`end year`>, endM=<`end month`>, endD=<`end day`> |
+|GET	 |/users/all            |**Query**:  **optional but when is use they are all required as a set** startY=<`start-year for the filter YYYY`>, startM=<`start-month MM`>, startD=<`start-day DD`>, endY=<`end-year YYYY`>, endM=<`end-month MM`>, endD=<`end-day DD`> |
 |POST	 |/users                |**Body**: username=<`username`>, email=<`email-address`>|
 |PATCH	 |/users/<`username`>|**Body**: username=<`username`> and/or email=<`email-address`>|
 |DELETE	 |/users/<`username`>|                          |
