@@ -26,9 +26,16 @@ let usersList = [
         activationDate: "January 3, 1937"
     }
 ]
-const printUsers = (rea, res, next) => {
-    // console.log('Getting it', getKey(usersList[0],1))
-    res.send(usersList);
+
+const addUser = (req, res, next) => {
+    let newUser = {
+        id: idCounter += 1,
+        username: req.body.username,
+        email: req.body.email,
+        activationDate: req.body.activationDate
+    }
+    usersList.push(newUser)
+    res.json(usersList);
 }
 
 const removeUser = (req, res, next) => {
@@ -42,17 +49,6 @@ const removeUser = (req, res, next) => {
     }
     res.json(usersList);
 }
-
-// const addRecipe = (req, res, next) => {
-//     let newRecipe = {
-//         id: idCounter += 1,
-//         name: req.body.name,
-//         ingredients: req.body.ingredients,
-//         directions: req.body.directions
-//     }
-//     recipesList.push(newRecipe)
-//     res.json(recipesList);
-// }
 
 const updateUsers = (req, res, next) => {
     let selectedID = req.params.updateUser;
@@ -105,7 +101,10 @@ const updateUsers = (req, res, next) => {
     }
 }
 
-
+const printUsers = (rea, res, next) => {
+    // console.log('Getting it', getKey(usersList[0],1))
+    res.send(usersList);
+}
 
 // const compareIngredients = (req, res, next) => {
 //     let userIngredient = req.params.match;
@@ -122,15 +121,13 @@ const updateUsers = (req, res, next) => {
 //     res.json(matchedIngredients);
 // }
 
-router.get("/", printUsers)
+router.post("/add", addUser);
 
 router.delete("/:deleteUser", removeUser);
 
 router.patch("/:updateUser", updateUsers);
 
-// router.post("/add", addRecipe);
-
-
+router.get("/", printUsers)
 
 // router.get("/:match", compareIngredients)
 
