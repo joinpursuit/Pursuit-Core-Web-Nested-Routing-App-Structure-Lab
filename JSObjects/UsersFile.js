@@ -82,13 +82,10 @@ class Users {
     }
 
     getUsersByActivationDate(start, end) {
-    console.log("server", start, end)
-
         if (!start || !end) {
             return -1; // Missing element of the filter;
         }
 
-        console.log(start.length, end.length)
         if (start.length !== 10 || end.length !== 10) {
             return -2; // wrong filter input
         }
@@ -101,12 +98,10 @@ class Users {
         }
 
         let arr = [];
-        console.log(start, end)
         
         if (end === start) {
             for (let user in this.users) {
                 let actDate = new Date(this.users[user].activationDate).getTime()
-                console.log(actDate)
                 if (actDate === start) {
                     arr.push(this.users[user])
                 }
@@ -114,7 +109,6 @@ class Users {
         } else {
             for (let user in this.users) {
                 let actDate = new Date(this.users[user].activationDate).getTime()
-                console.log(actDate)
                 if (actDate >= start && actDate <= end) {
                     arr.push(this.users[user])
                 }
