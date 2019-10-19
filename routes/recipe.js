@@ -63,4 +63,21 @@ router.get('/ingredient', (req, res) => {
 })
 
 
+router.patch('/:recipe/update', (req, res) => {
+    let inputRecipe = req.params.recipe
+    let ing = req.body.ingredients.split(',')
+    let directionsV = req.body.directions;
+
+    for (el of recipeArr) {
+        if (el.name === inputRecipe) {
+            if (ing) {
+                el.ingredients = ing
+            }
+            if (directionsV) {
+                el.directions = directionsV
+            }
+        }
+        res.send(el)
+    }
+})
 module.exports = router
