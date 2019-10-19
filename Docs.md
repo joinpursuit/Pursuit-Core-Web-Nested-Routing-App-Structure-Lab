@@ -13,10 +13,10 @@ Please refer to [README](https://github.com/AminesCodes/Pursuit-Core-Web-Nested-
 ## Endpoints
 * **Recipes**:
 
-|Method	 |Endpoint                |Possible Query Parameters |
+|Method	 |Endpoint                |Possible Query/Body Parameters |
 |:-------|:----------------------:|:-------------------------|
-|GET	 |/recipes/all            |search=<`ingredient (or ingredients separated by a space or comma)`> **optional**|
-|POST	 |/recipes                |name=<`recipe-name`>, ingredients=<`recipe ingredients (separated by space or comma)`>, directions=<`directions`>|
-|PATCH	 |/recipes/<`recipe-name`>|name=<`recipe-name`> and/or ingredients=<`recipe ingredients (separated by space or comma)`>, and/or directions=<`directions`>|
+|GET	 |/recipes/all            |**Query**: search=<`ingredient (or ingredients separated by a space or comma)`> **optional**|
+|POST	 |/recipes                |**Body**: name=<`recipe-name`>, ingredients=<`recipe ingredients (separated by space or comma)`>, directions=<`directions`>|
+|PATCH	 |/recipes/<`recipe-name`>|**Body**: name=<`recipe-name`> and/or ingredients=<`recipe ingredients (separated by space or comma)`>, and/or directions=<`directions`>|
 |DELETE	 |/recipes/<`recipe-name`>|                          |
 

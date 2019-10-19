@@ -23,30 +23,25 @@ class Recipes {
             return -2;
         }
         const newRecipe = new Recipe(name, ingredients, directions);
-        let keyName = name.replace(/ /g, '');
+        let keyName = (name.replace(/ /g, '')).toLowerCase();
         this.recipes[keyName] = newRecipe;
         return this.recipes[keyName];
     }
 
     updateRecipe(name, key, value) {
-        let keyName = name.replace(/ /g, '');
+        let keyName = (name.replace(/ /g, '')).toLowerCase();
         let keyValue = value;
-        if (key !== 'ingredients') {
-            keyValue = value.replace(/ /g, '');
-        }
 
         if (this.recipes[keyName]) {
-            console.log("\nINITIAL ALL RECIPES", this.recipes)
             if (key === 'name') {
-                this.recipes[keyValue] = this.recipes[keyName];
-                this.recipes[keyValue][key] = value;
+                keyValue = value.replace(/ /g, '').toLowerCase();
+                let temp = this.recipes[keyName]
                 delete this.recipes[keyName];
-                console.log("\nFINAL ALL RECIPES", this.recipes)
+                this.recipes[keyValue] = temp;
+                this.recipes[keyValue][key] = value;
                 return this.recipes[keyValue];
             } 
-            this.recipes[keyName] = this.recipes[keyName];
             this.recipes[keyName][key] = value;
-            console.log("\nFINAL ALL RECIPES", this.recipes)
             return this.recipes[keyName];
         }
         return -1;
@@ -71,7 +66,6 @@ class Recipes {
     }
 
     getRecipesByIngredient(ingArr) {
-        console.log(ingArr)
         let arr = [];
         let tracker = {}
         for (let name in this.recipes) {

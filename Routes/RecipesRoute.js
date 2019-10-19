@@ -1,11 +1,6 @@
 let express = require('express');
 let recipesRouter = express.Router();
 
-// let bodyParser = require('body-parser');
-// recipesRouter.use(bodyParser.urlencoded({
-//     extended: false
-// }));
-
 const fs = require('fs');
 // let previousData = //READ FROM DATA FILE AND TURN IT TO JSON
 
@@ -104,10 +99,17 @@ const updateTheRecipe = (request, response) => {
             message: "Recipe Doesn't Exist"
         })
     } else {
-        response.json({
-            status: 'success',
-            message: updatedRecipe
-        })
+        if (updatedRecipe) {
+            response.json({
+                status: 'success',
+                message: updatedRecipe
+            })
+        } else {
+            response.json({
+                status: 'Failed',
+                message: "Nothing to change"
+            })
+        }
     }
 }
 
