@@ -6,16 +6,16 @@ const router = express.Router();
 let recipeArr = [];
 
 router.post('/add', (req, res) => {
-    let nameV = req.body.name;
-    let ing = req.body.ing
+    let name = req.body.name;
+    let ing = req.body.ingredients.split(',')
     let directionsV = req.body.directions;
 
-    let ingARR = []
-    ingARR.push(ing);
+    // let ingARR = []
+    // ingARR.push(ing);
 
     let recipeObj = {
-        name: nameV,
-        ingredients: ingARR,
+        name: name,
+        ingredients: ing,
         directions: directionsV
     }
 
@@ -35,12 +35,32 @@ router.delete('/delete', (req, res) => {
     })
 })
 
-router.get('/all')
+router.get('/all', (req, res) => {
+    res.send({
+        message: 'Here is all of the recipes, enjoy',
+        recipes: recipeArr
+    })
+})
 
 
 
 
+router.get('/ingredient', (req, res) => {
+    let specIng = req.query.ingredient
 
+    let ingStorage = [];
+    recipeArr.map(el => {
+        // console.log(el);
+
+        if (!el.ingredients.includes(specIng)) {
+            ingStorage.push(el)
+            res.send({
+                message: 'Here is all of the recipes, enjoy',
+                recipe: ingStorage
+            })
+        }
+    })
+})
 
 
 module.exports = router
