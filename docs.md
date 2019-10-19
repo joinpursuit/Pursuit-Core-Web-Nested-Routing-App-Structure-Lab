@@ -4,7 +4,8 @@
     - Update a recipe (PATCH)
     - Delete a recipe
     - GET all recipes 
-    - GET all recipes matching an ingredient (using query ?indredient=${userinput})
+    - GET all recipes matching an ingredient (using query ?ingredient=${userinput})
+
 - Inside of the Users do the following:
     - Add a user (POST)
     - Remove a user (DELETE)

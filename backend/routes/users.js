@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const allUsers = [
+const allUsers =  [
     {
         username: "donna112",
         email: "donna112@gmail.com",
@@ -28,8 +28,45 @@ const allUsers = [
         activationDate: 'May 24, 2005'
     }
 ]
-router.get('/all', (req,res) => {
+
+const verifyUser = (req, res, next) =>{
+
+}
+
+const displayUsers = (req, res, next) => {
     res.json(allUsers)
-})
+}
+
+
+const addUser = (req, res, next) => {
+    let newUser = res.body;
+    for(let i = 0; i < allUsers.length; i++){
+
+    }
+
+}
+
+const removeUser = (req, res, next) =>{
+let specificUser =
+for(let specificUser of  allUsers){
+    if(specificUser){
+        allUsers.filter(specificUser);
+
+    }
+}
+
+}
+
+const updateUser = (req, res, next) =>{
+
+}
+
+const getActivationDate = (req, res, next) =>{
+    
+}
+
+router.get('/all', displayUsers)
+router.post('/add-user', addUser)
+router.delete('/remove-user', removeUser)
 
 module.exports = router;
