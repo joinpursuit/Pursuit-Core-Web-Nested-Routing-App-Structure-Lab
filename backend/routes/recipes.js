@@ -24,11 +24,18 @@ const displayRecipes = (req,res,next) =>{
 }
 
 const validateRecipe = (req, res, next) =>{
-
+    let recipe = req.body
+    console.log('recipe', recipe)
+    if(allRecipes.includes(recipe)){
+        res.send('This recipe already exists');
+        return;
+    } else{
+        next();
+    }
 }
 
 const addRecipe = (req, res, next) =>{
-    let newRecipe = res.body;
+    let newRecipe = req.body;
     console.log(newRecipe)
     allRecipes.push(newRecipe)
     res.json(allRecipes)
@@ -59,7 +66,7 @@ const specificRecipe = (req, res, next) =>{
 
 
 routers.get("/all", displayRecipes)
-routers.post('/add-recipe ', addRecipe)
+routers.post('/add-recipe ', validateRecipe, addRecipe)
 // routers.put('/update-recipe, '')
 // routers.delete('/remove-recipe','')
 routers.get('/all/:ingredient', specificRecipe)
