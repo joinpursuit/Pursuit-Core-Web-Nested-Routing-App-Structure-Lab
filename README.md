@@ -51,7 +51,7 @@ A user object should look like this:
 ```js 
 {
     username: "user1234",
-    email: "user1234@gmail.com",
+    email: "user1234@gmail.com", 
     activationDate: "January 1, 1970"
 }
 ```
