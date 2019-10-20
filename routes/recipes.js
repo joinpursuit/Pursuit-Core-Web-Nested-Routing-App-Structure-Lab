@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../recipes.js")
-const Restaurant = require("../restaurant.js");
+const myRestaurant = require("../restaurant.js");
+const server = require("../server.js");
 
-let myRestaurant = new Restaurant();
 
 router.get("/getAllRecipes", (req, res) => {
     let all = myRestaurant.getAllRecipes();
@@ -14,7 +14,7 @@ router.post("/add", (req, res) => {
     let name = req.body.name;
     let ingredients = req.body.ingredients;
     let directions = req.body.directions;
-
+    // console.log("myRestaurant", myRestaurant.addRecipe())
     myRestaurant.addRecipe(name, ingredients, directions);
     res.send(myRestaurant.recipes)
     // res.json(myRestaurant.recipes)

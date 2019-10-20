@@ -3,6 +3,8 @@ const app = express();
 const port = 3000;
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const Restaurant = require("./restaurant.js")
+
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -19,3 +21,4 @@ app.use("/users", usersRouter)
 app.listen(port, () => {
     console.log(`Server is running at port ${3000}`)
 })
+

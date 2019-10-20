@@ -1,8 +1,10 @@
 const Recipe = require("./recipes.js");
+const User = require("./user.js")
 
 class Restaurant {
     constructor() {
-      this.recipes = {}
+      this.recipes = {},
+      this.users = {}
     }
 
 
@@ -62,6 +64,13 @@ class Restaurant {
         }
         return recipeObj
     }
+
+    addUser(name, email) {
+        let newUser = new User(name, email);
+        this.users[name] = newUser;
+    }
 }
 
-module.exports = Restaurant;
+let myRestaurant = new Restaurant();
+
+module.exports = myRestaurant;
