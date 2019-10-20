@@ -2,31 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 
-let users = [
-    {
-        username: 'John Doe',
-        email: 'test@123.com',
-        activationDate: `January 1, 1970`
-    }
-]
+let users = [];
 
 
 router.get('/', (req, res) => {
+    // let newUser = req.body;
+    res.json(users);
+});
 
-    let newUser = req.body.username;
-    if (!newUser) {
-        res.json(users)
+router.post('/', (req, res) => {
+    let newUser = {
+        username: req.body.username,
+        email: req.body.email,
+        activationDate: req.body.activationDate
+    }
+    if (!newUser.username || !newUser.email || !newUser.activationDate) {
+        res.send(`Adding users require a username, email, and activationDate`);
     } else {
         users.push(newUser);
         res.json(users);
     }
-});
-
-router.post('/', (req, res) => {
-    let newUser = req.body;
-    users.push(newUser);
-    res.json(users);
-
 });
 
 router.delete(`/delete/:username`, (req, res) => {
@@ -35,6 +30,7 @@ router.delete(`/delete/:username`, (req, res) => {
     users.map(element => {
         if (element.username === removeUser) {
             let index = users.indexOf(element);
+            console.log(index)
             users.splice(index, 1);
         }
     });
