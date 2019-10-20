@@ -5,9 +5,9 @@ const Restaurant = require("../restaurant.js");
 
 let myRestaurant = new Restaurant();
 
-router.get("/:recipe", (req, res) => {
-    let recipe = req.params.recipe;
-    res.json(myRestaurant.getRecipe(recipe))
+router.get("/getAllRecipes", (req, res) => {
+    let all = myRestaurant.getAllRecipes();
+    res.json(all);
 })
 
 router.post("/add", (req, res) => {
@@ -28,10 +28,24 @@ router.patch("/:recipe", (req, res) => {
 
     let answer = myRestaurant.updateRecipe(targetRecipe, name, ingredients, directions);
     res.json(answer);
-
-    
 })
 
+router.delete("/:recipe", (req, res) => {
+    let recipe = req.params.recipe
+    myRestaurant.deleteRecipe(recipe)
+    res.json(myRestaurant.recipes)
+})
+
+router.get("/ingredient", (req, res) => {
+    let ingredient = req.body.ingredient;
+    let recipeIngr = myRestaurant.getRecipeByIngredient(ingredient);
+    res.json(recipeIngr)
+})
+
+router.get("/:recipe", (req, res) => {
+    let recipe = req.params.recipe;
+    res.json(myRestaurant.getRecipe(recipe))
+})
 
 
 module.exports = router;

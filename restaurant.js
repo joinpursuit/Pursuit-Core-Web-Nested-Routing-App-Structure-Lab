@@ -19,10 +19,14 @@ class Restaurant {
         }
     }
 
-    deleteRecipe(name) {
+    getAllRecipes() {
+        return this.recipes;
+    }
+
+    deleteRecipe(targetRecipe) {
         for( let i in this.recipes) {
-            if(i === name) {
-                return this.recipes[i]
+            if(i === targetRecipe) {
+                delete this.recipes[i.toString()]
             }
         }
     }
@@ -48,6 +52,16 @@ class Restaurant {
     }
     return this.recipes[targetRecipe]
 }
+
+    getRecipeByIngredient(targetIngredient) {
+        let recipeObj = []
+        for(let i in this.recipes) {
+            if (this.recipes[i].ingredients.includes(targetIngredient)) {
+                recipeObj.push(this.recipes[i]);
+            }
+        }
+        return recipeObj
+    }
 }
 
 module.exports = Restaurant;

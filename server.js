@@ -12,6 +12,9 @@ app.use(bodyParser.urlencoded({
 const recipesRouter = require("./routes/recipes.js");
 app.use("/recipes", recipesRouter);
 
+const usersRouter = require("./routes/users.js");
+app.use("/users", usersRouter)
+
 
 app.listen(port, () => {
     console.log(`Server is running at port ${3000}`)
