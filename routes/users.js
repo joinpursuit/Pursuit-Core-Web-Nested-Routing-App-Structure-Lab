@@ -10,10 +10,9 @@ router.get('/', (req, res) => {
   res.send(users.displayAllUsers())
 })
 
-router.get('/:minDate/:maxDate', (req, res) => {
- let min = req.params.minDate
- let max = req.params.maxDate
- res.send(users.displaySpecificUsers(min, max))
+router.get('/:year', (req, res) => {
+ let year = req.params.year
+ res.send(users.displaySpecificUsers(year))
 })
 
 router.post('/:username/:email/:activationDate',(req, res) => {

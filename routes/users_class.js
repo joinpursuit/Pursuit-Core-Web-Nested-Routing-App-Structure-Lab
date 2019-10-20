@@ -10,6 +10,11 @@ class Users {
             username: "secondUser",
             email: "seconduser@gmail.com",
             activationDate: "February 13, 1970"
+        },
+        {
+            username: "thirdUser",
+            email: "thirduser@gmail.com",
+            activationDate: "April 22, 1971"
         }
       ]
     }
@@ -18,14 +23,16 @@ class Users {
        return this.allUsers 
     }
 
-    displaySpecificUsers (min, max) {
+    displaySpecificUsers (year) {
        let newArr = []
        this.allUsers.forEach(el => {
-           if (el.activationDate > min && el.activationDate < max) {
+           let date = el.activationDate.split(" ")
+           let userYr = date[date.length - 1]
+           if (year === userYr) {
              newArr.push(el)
            }
        })
-       return newArr
+       return newArr 
     }
 
     addNewUser (username, email, activationDate) {
@@ -64,6 +71,5 @@ class Users {
  }
 
 let user = new Users();
-
  
  module.exports = Users 
