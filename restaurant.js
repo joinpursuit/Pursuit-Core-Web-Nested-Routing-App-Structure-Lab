@@ -56,18 +56,62 @@ class Restaurant {
 }
 
     getRecipeByIngredient(targetIngredient) {
-        let recipeObj = []
+        let recipeArr = []
         for(let i in this.recipes) {
             if (this.recipes[i].ingredients.includes(targetIngredient)) {
-                recipeObj.push(this.recipes[i]);
+                recipeArr.push(this.recipes[i]);
             }
         }
-        return recipeObj
+        return recipeArr
     }
 
     addUser(name, email) {
         let newUser = new User(name, email);
         this.users[name] = newUser;
+    }
+
+    updateUser(targetUser, name, email) {
+        console.log("hi")
+        for(let i in this.users) {
+            console.log(i, targetUser)
+            if(i === targetUser) {
+                console.log(i, targetUser)
+                if (email) {
+                    console.log(email)
+                    this.users[targetUser].email = email
+                }
+                if(name) {
+                    this.users[name] = this.users[targetUser]
+                    this.users[name].name = name
+                    delete this.users[targetUser]
+                    return this.users[name]
+                }       
+            }   
+        }
+        console.log(this.users[targetUser])
+        return this.users[targetUser]
+    }
+
+    deleteUser(targetUser) {
+        for( let i in this.users) {
+            if(i === targetUser) {
+                delete this.users[i.toString()]
+            }
+        }
+    }
+
+    getAllUsers() {
+        return this.users;
+    }
+
+    getUserByTime(targetYear) {
+        let userArr = []
+        for(let i in this.users) {
+            if (this.users[i].activationDate.startsWith(targetYear)) {
+                userArr.push(this.users[i]);
+            }
+        }
+        return userArr
     }
 }
 
