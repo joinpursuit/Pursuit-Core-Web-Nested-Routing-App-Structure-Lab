@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./index.js"></script>
+    <title>My Restaurant</title>
+</head>
+<body>
+    <div id="RecipeDiv">
+        <form>
+        <input id="recipeName" placeholder="Name of dish">
+        <input id="ingredients" placeholder="Ingredients (separate each with commas">
+        <input id= "directions" placeholder="Cooking directions">
+        <select id="recipeFunction">Pick a function
+                <option id="addRecipe">Add Recipe</option>
+                <option id="updateRecipe">Update</option>
+                <option id="deleteRecipe">Delete</option>
+                <option id="getAllRecipes">Get all</option>
+                <option id="recipeByIngr">Recipes by Ingredient</option>
+        </select>
+        <button id="recipeButton">Submit</button>
+        </form>
+    </div>
+
+    <div id="userDiv">
+        <form>
+            <input id="userName" placeholder="User Name">
+            <input id="userEmail" placeholder="email">
+            <select id="userFunction">Pick a function
+                <option id="addUser">Add User</option>
+                <option id="updateUser">Update</option>
+                <option id="deleteUser">Delete</option>
+                <option id="getAllUsers">Get all</option>
+                <option id="usersByYear">Users by year</option>              
+            </select>
+            <button id="usersButton">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
