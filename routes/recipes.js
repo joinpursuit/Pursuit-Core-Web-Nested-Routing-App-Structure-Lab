@@ -2,50 +2,71 @@
 // Recipes Route | Nested Routing App Structure Lab
 //
 
+
 /* CUSTOM HELPERS */
 const log = console.log;
+
 
 /* ROUTER INIT */
 const express = require('express');
   const router = express.Router();
-router.use(express.json()); // parses for req.body, espec raw
+router.use(express.json()); // parses RAW req.body (Postman)
 router.use(express.urlencoded({extended: false}));
-const fs = require('fs');
-  const jsonPath = '../dbs/recipesDB.json';
+
+
+/* GLOBAL VAR */
+const g = {
+  recipesJSON: {
+    hits: 0,
+    index: {},
+    nextIdxAssign: 1,
+    data: [null]
+  },
+  changeAllowed: {
+    name: true,
+    picUrl: true,
+    description: true,
+    ingredients: true,
+    directions: true
+  },
+  searchAsSpace: {
+    ['[']: true, [']']: true, ['{']: true, ['}']: true, ['/']: true, ['"']: true, 
+    ['-']: true, ['_']: true, [':']: true, [',']: true
+  }
+}
+
 
 /* DATA */
-let recipesJSON = require('../dbs/recipesDB.json');
-const changeAllowed = {
-  name: true,
-  picUrl: true,
-  description: true,
-  ingredients: true,
-  directions: true
+class Recipe {
+  constructor(name, picUrl, description, ingredients, directions) {
+    this.name = name;
+    this.picUrl = picUrl;
+    this.description = description;
+    this.ingredients = ingredients;
+    this.directions = directions;
+    this.idx = g.recipesJSON.nextIdxAssign;
+    Recipe.addInstance(this); // pushes recipes into json's array upon instantiation
+  }
+  // //
+  containsString(str) {
+    let strungArray = JSON.stringify(Object.values(this)).toLowerCase().split('');
+    strungArray = strungArray.map(char => {
+        if (g.searchAsSpace[char]) {
+          return " ";
+        }
+        return char;
+    }).join('');
+    // TODO build own search function. KMP algo?
+    return strungArray.includes(str);
+  }
+  static addInstance(el) {
+    g.recipesJSON.hits += 1;
+    g.recipesJSON.index[el.name.toLowerCase()] = g.recipesJSON.nextIdxAssign;
+    g.recipesJSON.nextIdxAssign += 1;
+    g.recipesJSON.data.push(el);
+  }
 }
-/*  {
-  name: "",
-  picUrl: "",
-  description: "",
-  ingredients: {},
-  directions: ""
-} */
 
-const writeToFile = () => {
-  log('star', recipesJSON);
-
-  // stringify JSON Object
-  // const strungRecipes = JSON.stringify(recipes);
-//   console.log(strungRecipes);
-  
-//   fs.writeFile("./dbs/recipesDB.json", strungRecipes, 'utf8', function (err) {
-//       if (err) {
-//           console.log("An error occured while writing JSON Object to File.");
-//           return console.log(err);
-//       }
-//       console.log(Date.now() + " JSON file has been saved.");
-//   });
-}
-// writeToFile();
 
 /* HELPERS */
 const cleanEmpties = (arr) => {
@@ -55,7 +76,7 @@ const cleanEmpties = (arr) => {
 
 /* MIDDLEWARE */
 const doesExist = (req, res, next) => {
-  if (!recipesJSON.index[req.query.target.toLowerCase()]) {
+  if (!g.recipesJSON.index[req.query.target.toLowerCase()]) {
     res.json({
         status: "fail",
         message: "Error: cannot find the target recipe. Check the name and try again."
@@ -66,7 +87,7 @@ const doesExist = (req, res, next) => {
 }
 
 const checkDupe = (req, res, next) => {
-  if (recipesJSON.index[req.body.name.toLowerCase()]) {
+  if (g.recipesJSON.index[req.body.name.toLowerCase()]) {
     res.json({
       status: "fail",
       message: "Error: This drink already exists in the database. Either Edit or Delete the present entry."
@@ -129,58 +150,55 @@ const checkInput = (req, res, next) => {
   }
 }
 
-const patchRecipe = (req, res, next) => {
-  log(req.body);
-  // const target = recipesJSON.data[recipesJSON.index[req.query.target]];
-  for (let key in req.body) {
-    log('key: ', key)
-    log(recipesJSON.data[recipesJSON.index[req.query.target]][key]);
-    if (changeAllowed[key]) {
-      recipesJSON.data[recipesJSON.index[req.query.target]][key] = req.body[key];
-    }
-  }
+const searchRecipes = (req, res, next) => {
+  let query = req.query.search.trim();
+  const outputArr = g.recipesJSON.data.filter(recipe => {
+      if (recipe) {
+        return recipe.containsString(query);
+      }
+  });
   res.json({
       status: "success",
-      message: `The recipe for ${req.query.target} has been updated.`
+      data: outputArr
   });
 }
 
 const addRecipe = (req, res, next) => {
-  let outputObj = {}
-  for (let key in req.body) {
-    if (changeAllowed[key]) {
-      outputObj[key] = req.body[key];
-    }
-  }
-  outputObj['idx'] = recipesJSON.nextIdxAssign;
-  recipesJSON.data.push(outputObj);
-  recipesJSON.hits += 1;
-  recipesJSON.index[outputObj.name.toLowerCase()] = recipesJSON.nextIdxAssign;
-  recipesJSON.nextIdxAssign += 1;
+  new Recipe (
+    req.body.name,
+    req.body.picUrl,
+    req.body.description,
+    req.body.ingredients,
+    req.body.directions
+  )
   res.json({
       status: "success",
-      message: `Your \'${outputObj.name}\' recipe has been added.`
+      message: `Your \'${req.body.name}\' recipe has been added.`
+  });
+}
+
+const patchRecipe = (req, res, next) => {
+  for (let key in req.body) {
+    if (g.changeAllowed[key]) {
+      g.recipesJSON.data[g.recipesJSON.index[req.query.target]][key] = req.body[key];
+    }
+  }
+  res.json({
+      status: "success",
+      message: `The recipe for \'${req.query.target}\' has been updated.`
   });
 }
 
 const delRecipe = (req, res, next) => {
-    recipesJSON.data.splice(recipesJSON.index[req.query.target.toLowerCase()], 1, null);
-    recipesJSON.hits -= 1;
-    delete recipesJSON.index[req.query.target.toLowerCase()];
+    g.recipesJSON.data.splice(g.recipesJSON.index[req.query.target.toLowerCase()], 1, null);
+    g.recipesJSON.hits -= 1;
+    delete g.recipesJSON.index[req.query.target.toLowerCase()];
     res.json({
         status: "success",
         message: `\'${req.query.target.toLowerCase()}\' recipe has been removed.`
     });
 }
 
-const logger = (req, res, next) => {
-  // log(recipesJSON);
-  
-  res.send("HIT!");
-}
-const serveAllRecipes = (req, res, next) => {
-
-}
 
 /* RECIPES Routes */
 router.post("/", checkDupe, checkInput, addRecipe);
@@ -189,11 +207,30 @@ router.patch("/edit", doesExist, checkInput, patchRecipe);
 
 router.delete("/edit", doesExist, delRecipe);
 
+router.get("/filter", searchRecipes);
+
 router.get("/all", (req, res) => {
-    res.json(cleanEmpties(recipesJSON.data));
+    res.json(cleanEmpties(g.recipesJSON.data));
+});
+
+router.get("/json", (req, res) => {
+    res.json(g.recipesJSON);
 });
 
 
+/* TEMP DATA POPULACE 
+   TODO move to separate file
+*/
+const moreRecipes = require('../dbs/recipePopulace.json');
+for (let i = 1; i < moreRecipes.length; i++) {
+  g.recipesJSON.data[i] = new Recipe (
+    moreRecipes[i].name,
+    moreRecipes[i].picUrl,
+    moreRecipes[i].description,
+    moreRecipes[i].ingredients,
+    moreRecipes[i].directions
+  )
+}
 
 
 module.exports = router;
