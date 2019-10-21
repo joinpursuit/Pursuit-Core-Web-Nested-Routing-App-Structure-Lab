@@ -202,25 +202,20 @@ const delRecipe = (req, res, next) => {
 
 /* RECIPES Routes */
 router.post("/", checkDupe, checkInput, addRecipe);
-
 router.patch("/edit", doesExist, checkInput, patchRecipe);
-
 router.delete("/edit", doesExist, delRecipe);
-
 router.get("/filter", searchRecipes);
-
 router.get("/all", (req, res) => {
     res.json(cleanEmpties(g.recipesJSON.data));
 });
 
+// unpublished route for debugging
 router.get("/json", (req, res) => {
     res.json(g.recipesJSON);
 });
 
 
-/* TEMP DATA POPULACE 
-   TODO move to separate file
-*/
+/* TEMP DATA POPULATION */ // TODO move to separate file
 const moreRecipes = require('../dbs/recipePopulace.json');
 for (let i = 1; i < moreRecipes.length; i++) {
   g.recipesJSON.data[i] = new Recipe (
