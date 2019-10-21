@@ -9,11 +9,19 @@ const log = console.log;
 const express = require('express');
   const router = express.Router();
 router.use(express.json()); // parses for req.body, espec raw
+router.use(express.urlencoded({extended: false}));
 const fs = require('fs');
   const jsonPath = '../dbs/recipesDB.json';
 
 /* DATA */
 let recipesJSON = require('../dbs/recipesDB.json');
+const changeAllowed = {
+  name: true,
+  picUrl: true,
+  description: true,
+  ingredients: true,
+  directions: true
+}
 /*  {
   name: "",
   picUrl: "",
@@ -37,14 +45,28 @@ const writeToFile = () => {
 //       console.log(Date.now() + " JSON file has been saved.");
 //   });
 }
-writeToFile();
+// writeToFile();
 
 /* HELPERS */
+const cleanEmpties = (arr) => {
+  return arr.filter(el => !!el)
+}
 
 
 /* MIDDLEWARE */
+const doesExist = (req, res, next) => {
+  if (!recipesJSON.index[req.query.target.toLowerCase()]) {
+    res.json({
+        status: "fail",
+        message: "Error: cannot find the target recipe. Check the name and try again."
+    });
+  } else {
+    next();
+  }
+}
+
 const checkDupe = (req, res, next) => {
-  if (recipesJSON.index[req.body.name]) {
+  if (recipesJSON.index[req.body.name.toLowerCase()]) {
     res.json({
       status: "fail",
       message: "Error: This drink already exists in the database. Either Edit or Delete the present entry."
@@ -107,32 +129,52 @@ const checkInput = (req, res, next) => {
   }
 }
 
+const patchRecipe = (req, res, next) => {
+  log(req.body);
+  // const target = recipesJSON.data[recipesJSON.index[req.query.target]];
+  for (let key in req.body) {
+    log('key: ', key)
+    log(recipesJSON.data[recipesJSON.index[req.query.target]][key]);
+    if (changeAllowed[key]) {
+      recipesJSON.data[recipesJSON.index[req.query.target]][key] = req.body[key];
+    }
+  }
+  res.json({
+      status: "success",
+      message: `The recipe for ${req.query.target} has been updated.`
+  });
+}
+
 const addRecipe = (req, res, next) => {
   let outputObj = {}
   for (let key in req.body) {
-    outputObj[key] = req.body[key];
+    if (changeAllowed[key]) {
+      outputObj[key] = req.body[key];
+    }
   }
+  outputObj['idx'] = recipesJSON.nextIdxAssign;
   recipesJSON.data.push(outputObj);
   recipesJSON.hits += 1;
-  recipesJSON.index[outputObj.name.toLowerCase()] = true;
-  res.json(recipesJSON);
+  recipesJSON.index[outputObj.name.toLowerCase()] = recipesJSON.nextIdxAssign;
+  recipesJSON.nextIdxAssign += 1;
+  res.json({
+      status: "success",
+      message: `Your \'${outputObj.name}\' recipe has been added.`
+  });
 }
 
 const delRecipe = (req, res, next) => {
-  if (!recipesJSON.index[req.body.name.toLowerCase()]) {
+    recipesJSON.data.splice(recipesJSON.index[req.query.target.toLowerCase()], 1, null);
+    recipesJSON.hits -= 1;
+    delete recipesJSON.index[req.query.target.toLowerCase()];
     res.json({
-        status: "fail",
-        message: "Error: cannot find the target recipe. Check the name and try again."
+        status: "success",
+        message: `\'${req.query.target.toLowerCase()}\' recipe has been removed.`
     });
-  } else {
-    res.json({
-        TODO: "TODO"
-    });
-  }
 }
 
 const logger = (req, res, next) => {
-  log(recipesJSON);
+  // log(recipesJSON);
   
   res.send("HIT!");
 }
@@ -143,10 +185,12 @@ const serveAllRecipes = (req, res, next) => {
 /* RECIPES Routes */
 router.post("/", checkDupe, checkInput, addRecipe);
 
-router.delete("/edit", delRecipe);
+router.patch("/edit", doesExist, checkInput, patchRecipe);
+
+router.delete("/edit", doesExist, delRecipe);
 
 router.get("/all", (req, res) => {
-    res.json(recipes);
+    res.json(cleanEmpties(recipesJSON.data));
 });
 
 
