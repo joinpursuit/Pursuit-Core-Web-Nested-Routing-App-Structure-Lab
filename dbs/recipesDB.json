@@ -1,11 +1,13 @@
 {
     "hits": 3,
     "index": {
-        "b-52": true,
-        "kamikaze": true,
-        "whiskey sour": true
+        "b-52": 1,
+        "kamikaze": 2,
+        "whiskey sour": 3
     },
+    "nextIdxAssign": 4,
     "data": [
+        null,
         {
             "name": "B-52",
             "picUrl": "https://cdn.liquor.com/wp-content/uploads/2016/12/05144234/B52-shot-720sq.jpg",
@@ -15,7 +17,8 @@
                 "Baileys Irish cream liqueur": 0.33,
                 "Grand Marnier liqueur": 0.33
             },
-            "directions": "Layer the three spirits in a shot glass in the order they're listed."
+            "directions": "Layer the three spirits in a shot glass in the order they're listed.",
+            "idx": 1
         },
         {
             "name": "Kamikaze",
@@ -26,7 +29,8 @@
                 "orange liquer": 0.75,
                 "fresh lime juice": 0.75
             },
-            "directions": "Add all the ingredients into a shaker with ice, and shake thoroughly until well-chilled. Double-strain into two shot glasses. Makes 2 shots."
+            "directions": "Add all the ingredients into a shaker with ice, and shake thoroughly until well-chilled. Double-strain into two shot glasses. Makes 2 shots.",
+            "idx": 2
         },
         {
             "name": "Whiskey Sour",
@@ -39,7 +43,8 @@
                 "egg white (optional)": 0.5,
                 "Angostura bitters": 0.1
             },
-            "directions": "Add all the ingredients into a shaker and dry-shake (no ice). Add ice and shake again until well-chilled. Strain into a chilled coupe. Top with 3-5 drops of Angostura bitters."
+            "directions": "Add all the ingredients into a shaker and dry-shake (no ice). Add ice and shake again until well-chilled. Strain into a chilled coupe. Top with 3-5 drops of Angostura bitters.",
+            "idx": 3
         }
     ]
 }
