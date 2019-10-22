@@ -9,7 +9,8 @@
             "Baileys Irish cream liqueur": 0.33,
             "Grand Marnier liqueur": 0.33
         },
-        "directions": "Layer the three spirits in a shot glass in the order they're listed."
+        "directions": "Layer the three spirits in a shot glass in the order they're listed.",
+        "ownerId": 923
     },
     {
         "name": "Kamikaze",
@@ -20,7 +21,8 @@
             "orange liqueur": 0.75,
             "fresh lime juice": 0.75
         },
-        "directions": "Add all the ingredients into a shaker with ice, and shake thoroughly until well-chilled. Double-strain into two shot glasses. Makes 2 shots."
+        "directions": "Add all the ingredients into a shaker with ice, and shake thoroughly until well-chilled. Double-strain into two shot glasses. Makes 2 shots.",
+        "ownerId": 923
     },
     {
         "name": "Whiskey Sour",
@@ -33,7 +35,8 @@
             "egg white (optional)": 0.5,
             "Angostura bitters": 0.1
         },
-        "directions": "Add all the ingredients into a shaker and dry-shake (no ice). Add ice and shake again until well-chilled. Strain into a chilled coupe. Top with 3-5 drops of Angostura bitters."
+        "directions": "Add all the ingredients into a shaker and dry-shake (no ice). Add ice and shake again until well-chilled. Strain into a chilled coupe. Top with 3-5 drops of Angostura bitters.",
+        "ownerId": 22
     },
     {
         "name": "Traditional Old Fashioned",
@@ -44,6 +47,7 @@
             "Demerara syrup (in tsps)": 1,
             "Angostura aromatic bitters (in dashes)": 2
         },
-        "directions": "Fill a mixing glass with ice, and add all of the ingredients. Stir until chilled and diluted, and strain into an Old Fashioned glass with fresh ice. Garnish with an expressed orange peel and 2 cherries."
+        "directions": "Fill a mixing glass with ice, and add all of the ingredients. Stir until chilled and diluted, and strain into an Old Fashioned glass with fresh ice. Garnish with an expressed orange peel and 2 cherries.",
+        "ownerId": 923
     }
 ]

@@ -1,0 +1,37 @@
+[
+    null,
+    {
+        "username": "ownyourpursuit",
+        "email": "hello@pursuit.org",
+        "activeDate": "January 1, 2011",
+        "id": 923
+    },
+    {
+        "username": "meerkat20",
+        "email": "mkat@jungle.com",
+        "activeDate": "June 15, 2010",
+        "id": 476
+    },
+    {
+        "username": "elephant",
+        "email": "phantom@bronxzoo.org",
+        "activeDate": "May 15, 2010",
+        "id": 8
+    },
+    {
+        "username": "pandapandapanda",
+        "email": "threetimes@bambooboo.com",
+        "activeDate": "September 14, 2016",
+        "id": 22
+    },
+    {
+        "username": "horsearoundtheclock",
+        "email": "niegh@shakeyournaynay.com",
+        "activeDate": "November 30, 1999"
+    },
+    {
+        "username": "felixthefiretruck",
+        "email": "sirensblazing@nyfd.ny.gov",
+        "activeDate": "October 20, 2019"
+    }
+]
