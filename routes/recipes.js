@@ -10,8 +10,8 @@ const log = console.log;
 /* ROUTER INIT */
 const express = require('express');
   const router = express.Router();
-router.use(express.json()); // parses RAW req.body (Postman)
-router.use(express.urlencoded({extended: false}));
+  router.use(express.json()); // parses RAW req.body (Postman)
+  router.use(express.urlencoded({extended: false}));
 
 
 /* GLOBAL VAR */
@@ -38,12 +38,13 @@ const g = {
 
 /* DATA */
 class Recipe {
-  constructor(name, picUrl, description, ingredients, directions) {
+  constructor(name, picUrl, description, ingredients, directions, ownerId) {
     this.name = name;
     this.picUrl = picUrl;
     this.description = description;
     this.ingredients = ingredients;
     this.directions = directions;
+    this.ownerId = ownerId;
     this.idx = g.recipesJSON.nextIdxAssign;
     Recipe.addInstance(this); // pushes recipes into json's array upon instantiation
   }
@@ -169,7 +170,8 @@ const addRecipe = (req, res, next) => {
     req.body.picUrl,
     req.body.description,
     req.body.ingredients,
-    req.body.directions
+    req.body.directions,
+    req.body.ownerId
   )
   res.json({
       status: "success",
@@ -200,7 +202,7 @@ const delRecipe = (req, res, next) => {
 }
 
 
-/* RECIPES Routes */
+/* ROUTES */
 router.post("/", checkDupe, checkInput, addRecipe);
 router.patch("/edit", doesExist, checkInput, patchRecipe);
 router.delete("/edit", doesExist, delRecipe);
@@ -216,14 +218,15 @@ router.get("/json", (req, res) => {
 
 
 /* TEMP DATA POPULATION */ // TODO move to separate file
-const moreRecipes = require('../dbs/recipePopulace.json');
+const moreRecipes = require('../dbs/recipesPersistent.json');
 for (let i = 1; i < moreRecipes.length; i++) {
   g.recipesJSON.data[i] = new Recipe (
     moreRecipes[i].name,
     moreRecipes[i].picUrl,
     moreRecipes[i].description,
     moreRecipes[i].ingredients,
-    moreRecipes[i].directions
+    moreRecipes[i].directions,
+    moreRecipes[i].ownerId
   )
 }
 
