@@ -22,8 +22,8 @@ const usersRT = require('./routes/users.js');
 const recipesRT = require('./routes/recipes.js');
 
 // Connects
-app.use('/users', usersRT);
 app.use('/recipes', recipesRT);
+app.use('/users', usersRT);
 
 
 /* NO-ROUTE CATCH */

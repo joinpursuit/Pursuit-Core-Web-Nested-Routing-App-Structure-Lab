@@ -26,7 +26,11 @@ const g = {
   changeAllowed: {
     username: true,
     email: true
-  }
+  },
+  months: [
+    "January", "February", "March"," April", "May", "June", "July", "August", 
+    "September", "October", "November", "December"
+  ]
 };
 
 
@@ -43,6 +47,11 @@ class User {
     User.addInstance(this); // pushes user into json's array upon instantiation
   }
   // //
+  containsString(str) {
+    let strungArray = JSON.stringify(this.username + this.email).toLowerCase();
+    // TODO build own search function. KMP algo?
+    return strungArray.includes(str);
+  }
   getRecipesOwned() {
     // TODO Connect to recipes when ready
   }
@@ -66,14 +75,24 @@ class User {
 
 
 /* HELPERS */
-const ignoreEmpties = (arr) => {
-  return arr.filter(el => !!el)
+const ignoreEmpties = (arr) => arr.filter(el => !!el);
+
+const formatDate = (str) => {
+  const d = new Date(str);
+  return `${g.months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
 
 /* MIDDLEWARE */
 const checkExists = (req, res, next) => {
-  if (!g.usersJSON.nameToId[req.query.target.toLowerCase()]) {
+  let target = null;
+  if (req.query.target) {
+    target = req.query.target.toLowerCase();
+  } else {
+    log('HIT');
+    target = req.params.username.toLowerCase();
+  }
+  if (!g.usersJSON.nameToId[target]) {
     res.json({
         status: "fail",
         message: "Error: cannot find the target account. Check the username and try again."
@@ -135,6 +154,31 @@ const checkInputs = (req, res, next) => {
   }
 }
 
+const searchUsers = (req, res, next) => {
+  let queryStr = '';
+  let rangeBeginDate = new Date("January 1, 1970");
+  let rangeEndDate = new Date();
+  if (req.body.search) {
+    queryStr = req.body.search.trim();
+  }
+  if (req.body.begin) {
+    rangeBeginDate = new Date(req.body.begin);
+  }
+  if (req.body.end) {
+    rangeEndDate = new Date(req.body.end);
+  }
+  const outputArr = g.usersJSON.data.filter(userObj => {
+      if (userObj) {
+        const d = new Date(userObj.activeDate);
+        return userObj.containsString(queryStr) && d > rangeBeginDate && d < rangeEndDate;
+      }
+  });
+  res.json({
+      status: "success",
+      data: outputArr[0] ? outputArr : "No search results found."
+  });
+}
+
 const patchUser = (req, res, next) => {
   for (let key in req.body) {
     if (g.changeAllowed[key]) {
@@ -145,6 +189,16 @@ const patchUser = (req, res, next) => {
     status: "success",
     message: `Account \'${req.query.target}\' has been updated.`
 });
+}
+
+const profileUser = (req, res, next) => {
+  const outputObj = g.usersJSON.data[g.usersJSON.nameToUsersIdx];
+  let recipeNamesArr = [];
+  log(g.recipesJSON.data);
+  res.json({
+      status: "success",
+      data: outputObj
+  });
 }
 
 const addUser = (req, res, next) => {
@@ -163,9 +217,6 @@ const delUser = (req, res, next) => {
   const deletedName = g.usersJSON.data[g.usersJSON.nameToUsersIdx[target]].username;
   g.usersJSON.data.splice(g.usersJSON.nameToUsersIdx[target], 1, null);
   g.usersJSON.numOfUsers -= 1;
-  // nameToId: {},
-  // idToName: {},
-  // nameToUsersIdx: {},
   delete g.usersJSON.nameToUsersIdx[target];
   delete g.usersJSON.idToName[g.usersJSON.nameToId[target]];
   delete g.usersJSON.nameToId[target];
@@ -181,7 +232,20 @@ router.post("/", checkDupeName, checkInputs, addUser);
 router.patch("/edit", checkExists, checkInputs, patchUser);
 router.delete("/edit", checkExists, delUser);
 router.get("/filter", searchUsers);
-router.get("/all", (req, res) => res.json(ignoreEmpties(g.usersJSON.data)));
+// router.get("/profile/:username", checkExists, profileUser); // TODO after vars shared between routes
+router.get("/all", (req, res) => {
+    let output = [];
+    for (let userObj of g.usersJSON.data) {
+      if (userObj) {
+        userObj.activeDate = formatDate(userObj.activeDate)
+        output.push(userObj);
+      }
+    }
+    res.json({
+        status: "success",
+        data: output
+    });
+});
 
 // unpublished route for debugging
 router.get("/json", (req, res) => res.json(g.usersJSON));

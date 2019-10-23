@@ -70,9 +70,7 @@ class Recipe {
 
 
 /* HELPERS */
-const ignoreEmpties = (arr) => {
-  return arr.filter(el => !!el)
-}
+const ignoreEmpties = (arr) => arr.filter(el => !!el);
 
 
 /* MIDDLEWARE */
@@ -160,7 +158,7 @@ const searchRecipes = (req, res, next) => {
   });
   res.json({
       status: "success",
-      data: outputArr
+      data: outputArr[0] ? outputArr : "No search results found."
   });
 }
 
@@ -209,7 +207,12 @@ router.post("/", checkDupe, checkInput, addRecipe);
 router.patch("/edit", doesExist, checkInput, patchRecipe);
 router.delete("/edit", doesExist, delRecipe);
 router.get("/filter", searchRecipes);
-router.get("/all", (req, res) => res.json(ignoreEmpties(g.recipesJSON.data)));
+router.get("/all", (req, res) => {
+    res.json({
+        status: "success",
+        data: ignoreEmpties(g.recipesJSON.data)
+    });
+});
 
 // unpublished route for debugging
 router.get("/json", (req, res) => res.json(g.recipesJSON));
