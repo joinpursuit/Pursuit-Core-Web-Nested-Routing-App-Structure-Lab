@@ -70,7 +70,7 @@ class Recipe {
 
 
 /* HELPERS */
-const cleanEmpties = (arr) => {
+const ignoreEmpties = (arr) => {
   return arr.filter(el => !!el)
 }
 
@@ -164,6 +164,18 @@ const searchRecipes = (req, res, next) => {
   });
 }
 
+const patchRecipe = (req, res, next) => {
+  for (let key in req.body) {
+    if (g.changeAllowed[key]) {
+      g.recipesJSON.data[g.recipesJSON.index[req.query.target]][key] = req.body[key];
+    }
+  }
+  res.json({
+      status: "success",
+      message: `The recipe for \'${req.query.target}\' has been updated.`
+  });
+}
+
 const addRecipe = (req, res, next) => {
   new Recipe (
     req.body.name,
@@ -179,26 +191,16 @@ const addRecipe = (req, res, next) => {
   });
 }
 
-const patchRecipe = (req, res, next) => {
-  for (let key in req.body) {
-    if (g.changeAllowed[key]) {
-      g.recipesJSON.data[g.recipesJSON.index[req.query.target]][key] = req.body[key];
-    }
-  }
+const delRecipe = (req, res, next) => {
+  const target = req.query.target.toLowerCase();
+  const deletedName = g.recipesJSON.data[g.recipesJSON.index[target]].name;
+  g.recipesJSON.data.splice(g.recipesJSON.index[target], 1, null);
+  g.recipesJSON.hits -= 1;
+  delete g.recipesJSON.index[target];
   res.json({
       status: "success",
-      message: `The recipe for \'${req.query.target}\' has been updated.`
+      message: `\'${deletedName}\' recipe has been removed.`
   });
-}
-
-const delRecipe = (req, res, next) => {
-    g.recipesJSON.data.splice(g.recipesJSON.index[req.query.target.toLowerCase()], 1, null);
-    g.recipesJSON.hits -= 1;
-    delete g.recipesJSON.index[req.query.target.toLowerCase()];
-    res.json({
-        status: "success",
-        message: `\'${req.query.target.toLowerCase()}\' recipe has been removed.`
-    });
 }
 
 
@@ -207,7 +209,7 @@ router.post("/", checkDupe, checkInput, addRecipe);
 router.patch("/edit", doesExist, checkInput, patchRecipe);
 router.delete("/edit", doesExist, delRecipe);
 router.get("/filter", searchRecipes);
-router.get("/all", (req, res) => res.json(cleanEmpties(g.recipesJSON.data)));
+router.get("/all", (req, res) => res.json(ignoreEmpties(g.recipesJSON.data)));
 
 // unpublished route for debugging
 router.get("/json", (req, res) => res.json(g.recipesJSON));
