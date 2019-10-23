@@ -207,14 +207,10 @@ router.post("/", checkDupe, checkInput, addRecipe);
 router.patch("/edit", doesExist, checkInput, patchRecipe);
 router.delete("/edit", doesExist, delRecipe);
 router.get("/filter", searchRecipes);
-router.get("/all", (req, res) => {
-    res.json(cleanEmpties(g.recipesJSON.data));
-});
+router.get("/all", (req, res) => res.json(cleanEmpties(g.recipesJSON.data)));
 
 // unpublished route for debugging
-router.get("/json", (req, res) => {
-    res.json(g.recipesJSON);
-});
+router.get("/json", (req, res) => res.json(g.recipesJSON));
 
 
 /* TEMP DATA POPULATION */ // TODO move to separate file
