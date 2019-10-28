@@ -1,0 +1,23 @@
+{
+  "name": "Pursuit-Core-Web-Nested-Routing-App-Structure-Lab",
+  "version": "1.0.0",
+  "description": "Build a backend for a recipe API. It should have the following functionality:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ojones311/Pursuit-Core-Web-Nested-Routing-App-Structure-Lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ojones311/Pursuit-Core-Web-Nested-Routing-App-Structure-Lab/issues"
+  },
+  "homepage": "https://github.com/ojones311/Pursuit-Core-Web-Nested-Routing-App-Structure-Lab#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
