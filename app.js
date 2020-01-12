@@ -8,9 +8,11 @@ const recipeRouter = require("./recipes.js")
 const userRouter = require("./users.js")
 
 app.use("/recipes", recipeRouter)
+app.use("/users", userRouter)
+
 
 
 
 app.listen(port, ()=>
-    `Server is listening at port ${port}`
+   console.log(`Server is listening at port ${port}`) 
 )
