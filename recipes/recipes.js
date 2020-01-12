@@ -19,7 +19,7 @@ let data=[
             "Grape Jelly"
         ],
         directions:"DIY"
-    }
+    },
 ]
 
 recipes.patch("/",(req,res)=>{
@@ -30,8 +30,6 @@ recipes.patch("/",(req,res)=>{
        }else{
            data[i][req.body.parameter] = req.body.newElement
        }
-
-       
    }
    }
    res.json(data)
@@ -39,19 +37,17 @@ recipes.patch("/",(req,res)=>{
 
 
 recipes.delete("/",(req,res)=>{
-    // console.log(req.body.name)
+    console.log(req.body.name)
     for(let i=0;i<data.length;i++){
-        console.log(data[i].name===req.body.name)
         if(data[i].name===req.body.name){
-            console.log(data.splice(i,++i))
-            i--;
+            data.splice(i,i)
         }
     }
     // for(let key in data){
-    //        if(data[key].name===req.body.name){
-    //            data.splice(Number(key),Number(++key))
-    //        }
+    //     if(data[key].name===req.body.name){
+    //         data.splice(Number(key),Number(key))
     //     }
+    // }
     res.json(data)
 
 })
