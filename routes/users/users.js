@@ -40,7 +40,7 @@ users.get("/date/:min/:max", (req, res) => {
     console.log(req.params.min)
     let output = usersArr.filter(user => {
         let dateCreated = new Date(user.activationDate)
-        if (req.params.min < dateCreated.getFullYear() && req.params.min < req.params.max) {
+        if (req.params.min < dateCreated.getFullYear() && dateCreated.getFullYear() < req.params.max) {
             return user
         }
     })
