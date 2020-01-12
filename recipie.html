@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./frontend.js"></script>
+    <title>Recipies</title>
+</head>
+<body>
+    <form id="form">
+        <input type="text" placeholder="Recipie Name" id="name"> 
+        <input type="text" placeholder="Ingredients" id="ingredients">
+        <input type="text" placeholder="Directions" id="directions">
+        <select id="select">
+            <option value="add">Add A Recipie</option>
+            <option value="update">Update A Recipie</option>
+            <option value="delete">Delete A Recipie</option>
+            <option value="/">Get All Recipies</option>
+            <option value="findIngredients">Find Recipies With Ingredients</option>
+        </select>
+        <input type="submit" value="submit" id="submit">
+    </form>
+    <ul></ul>
+</body>
+</html>
