@@ -12,13 +12,15 @@ let recipeObj = {
 }
 
 
-
+recipe.get("/", (req, res) => {
+    res.json(recipeObj)
+})
 
 recipe.get("/:ingredients/", (req, res) => {
     let ingredient = req.params.ingredients
         recipeObj.ingredients.forEach(el => {
             if(el === ingredient){
-                console.log(el.name)
+                res.json(r)
             } else {
                 res.json("This ingredient is not available")
             }
