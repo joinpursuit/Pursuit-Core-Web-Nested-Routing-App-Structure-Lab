@@ -3,6 +3,6 @@ const directions = express.Router()
 
 directions.post("/:id", (req, res) => {
     console.log(req.params.id)
-    res.json(req.params.id)
+    res.json({directions: + req.params.id})
 })
 module.exports = directions
