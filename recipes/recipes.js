@@ -37,11 +37,11 @@ recipes.post("/", (req, res)=>{
     })
     
 
-recipes.patch("/:id", (req, res)=>{
+recipes.patch("/:recipeId", (req, res)=>{
     res.json("Updated recipe" + req.params.id)
 })
 
-recipes.delete("/:id", (req, res)=>{
+recipes.delete("/:recipeId", (req, res)=>{
     res.json("Deleted all recipes"+req.params.id)
 })
 

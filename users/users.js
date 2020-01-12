@@ -17,26 +17,29 @@ users.post("/", (req, res)=>{
     }
 })
 
-users.delete("/:id",(req, res)=>{
+users.delete("/:userId",(req, res)=>{
     res.json("Delete User" + req.params.id)
 })
 
-users.patch("/:id", (req, res)=>{
+users.patch("/:userId", (req, res)=>{
     res.json("Updated User" + req.params.id)
 })
 
 users.get("/", (req, res)=>{
     res.json([{
         name:"John",
+        id: 1,
         email:"johnsmith@gmail.com",
         dateActivated: "January 1, 2015"
     },{
     name:"Jane",
+    id:2,
     email:"janedoe@gmail.com",
     dateActivated: "July 15, 2019"
     },
     {
         name:"Bob",
+        id:3,
         email:"bobbrown@gmail.com",
         dateActivated: "March 30, 2011"
         }])
