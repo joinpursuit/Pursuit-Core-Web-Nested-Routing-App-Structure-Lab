@@ -1,19 +1,6 @@
 const users = require("express").Router()
 
-const allUsers = [{
-    name:"John",
-    email:"johnsmith@gmail.com",
-    dateActivated: "January 1, 2015"
-},{
-name:"Jane",
-email:"janedoe@gmail.com",
-dateActivated: "July 15, 2019"
-},
-{
-    name:"Bob",
-    email:"bobbrown@gmail.com",
-    dateActivated: "March 30, 2011"
-    }]
+const allUsers = 
 users.post("/", (req, res)=>{
     let newUser ={
         name:req.params.name,
@@ -39,11 +26,24 @@ users.patch("/:id", (req, res)=>{
 })
 
 users.get("/", (req, res)=>{
-    res.json("All users")
+    res.json([{
+        name:"John",
+        email:"johnsmith@gmail.com",
+        dateActivated: "January 1, 2015"
+    },{
+    name:"Jane",
+    email:"janedoe@gmail.com",
+    dateActivated: "July 15, 2019"
+    },
+    {
+        name:"Bob",
+        email:"bobbrown@gmail.com",
+        dateActivated: "March 30, 2011"
+        }])
 })
 
-//users.get(`/${userActivation}`, (req, res)=>{
-  //  res.json("Activation Date" + req.params.id)
-//})
+users.get("/dateActivated", (req, res)=>{
+   res.json("Activation Date" + req.params.id)
+})
 
 module.exports = users
