@@ -1,5 +1,6 @@
 const recipes = require("express").Router();
 
+let output = [];
 let recipesList =[ {
     name: "Grilled Cheese",
     ingredients: [
@@ -14,9 +15,27 @@ recipes.get("/", (req, res) => {
     res.json(recipesList)
 })
 recipes.post("/add", (req, res) => {
-    recipesList.push(req.body)
-    console.log(recipesList)
-    res.json(recipesList)
+    recipesList.push(req.body);
+    console.log(recipesList);
+    res.json(recipesList);
+})
+recipes.delete("/delete/:name", (req, res) => {
+    for(let i = 0; i < recipesList.length; i++){
+        if(recipesList[i]["name"] === req.params.name){
+            recipesList.splice( i, 1);
+        }
+    }
+    console.log(recipesList);
+    res.json(recipesList);
+})
+recipes.get("/findIngredients/:ingredients", (req, res) => {
+    for(let i = 0; i < recipesList.length; i++){
+        if(recipesList[i]["ingredients"].includes(req.params.ingredients)){
+            output.push(recipesList[i])
+        }
+    }
+    console.log(output);
+    res.json(output);
 })
 
 module.exports = recipes;
