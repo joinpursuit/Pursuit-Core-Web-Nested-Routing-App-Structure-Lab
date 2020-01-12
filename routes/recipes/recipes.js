@@ -37,7 +37,12 @@ recipes.delete('/:id',(req,res) => {
     res.json("deleted: " + req.params.id)
 })
 recipes.patch('/:id', (req,res) => {
-    res.json("updated: "+ req.params.id )
+    recipeArr.push(req.body)
+    res.json({
+        status:200,
+        message: "updated recipe",
+        updateRecipe: req.body
+    })
 })
 
 recipes.get('/:id', (req,res) => {
