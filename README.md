@@ -54,6 +54,7 @@ A user object should look like this:
     email: "user1234@gmail.com",
     activationDate: "January 1, 1970"
 }
+
 ```
 
 ## Bonus
