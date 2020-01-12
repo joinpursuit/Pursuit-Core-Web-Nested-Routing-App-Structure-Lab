@@ -5,4 +5,5 @@ names.post("/:id", (req, res) => {
     console.log(req.params.id)
     res.json(req.params.id)
 })
+
 module.exports = names
