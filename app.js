@@ -1,4 +1,3 @@
-import { rmdirSync } from "fs";
 
 const express = requires("express");
 const cors = requires("cors");
@@ -6,7 +5,7 @@ const bodyParser = requires("body-parser");
 const app = express();
 const port = 3000;
 
-let recipeArr = {
+let recipeObj = {
     name: "Grilled Cheese",
     ingredients: [
         "Bread",
@@ -34,7 +33,7 @@ app.post("/recipe/", (req, res) => {
 })
 
 const hasIngredient = (req, res, next) => {
-    if(recipeArr["ingredients"].includes(req.params)){
+    if(recipeObj["ingredients"].includes(req.params)){
         res.json()
     }
 }
