@@ -21,12 +21,27 @@ let recipesArr = [
         }
 ]
 
-
-
 recipes.get("/", (req, res) => {
     res.json(recipesArr)
 })
 
+recipes.post("/newRecipes", (req, res) => {
+    recipesArr.push(req.body)
+    res.json(recipesArr)
+})
 
+recipes.delete("/:name", (req, res) => {
+    let name = req.params.name
+    recipesArr.splice(name, 1)
+    res.json(recipesArr)
+})
+
+recipes.get("/:ingredient", (req, res) => {
+    let ingredient = req.params.ingredient;
+    let output = recipesArr.filter(recipe => {
+        return recipe.ingredients.includes(ingredient)
+    })
+    res.json(output)
+})
 
 module.exports = recipes
