@@ -39,10 +39,24 @@ recipes.post("/", (req, res) => {
     res.json(recipeList);
 })
 
+recipes.delete("/", (req, res) => {
+    for(let i = 0; i < recipeList.length; i++){
+        if(recipeList[i].name === req.body.name){
+            recipeList.splice(i,1)
+        }
+    }
+    res.json(recipeList)
+})
 
-// recipes.patch("/:name", (req, res) => {
-    
-// })
+recipes.patch("/", (req, res) => {
+    for(let i = 0; i < recipeList.length; i++) {
+        if(recipeList[i].name === req.body.name){
+            if(req.body.parameter === "ingredients"){
+                recipeList[i][req.body.parameter] = req.body.newElement;
+            }
+        }
+    }
+})
 
 
 module.exports = recipes;

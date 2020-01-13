@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const port = 3003;
+
+const port = 3000;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -14,9 +15,12 @@ const recipesRouter = require("./routes/recipes/recipes.js");
 app.use("/users", usersRouter);
 app.use("/recipes", recipesRouter);
 
+
 app.get("/", (req, res) => {
     res.json("Get response on url /");
 })
 
 
-app.listen(port, () => "Listening on port: ", port);
+
+
+app.listen(port, () => console.log("Listening on port: ", port));
