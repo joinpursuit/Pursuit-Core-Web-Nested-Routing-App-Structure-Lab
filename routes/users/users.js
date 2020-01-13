@@ -22,6 +22,10 @@ users.get("/", (req, res) => {
     res.json(usersList);
 })
 
+users.get("/:activationDate", (req, res) => {
+    res.json(usersList.filter(el => el.activationDate.includes(req.params.activationDate)))
+})
+
 users.post("/", (req, res) => {
     let newUser = {
         username: req.body.username,
@@ -36,5 +40,15 @@ users.delete("/", (req, res) => {
     usersList = usersList.filter(el => el.username !== req.body.username)
     res.json(usersList)
 })
+
+users.patch("/", (req, res) => {
+    for(let i = 0; i < usersList.length; i++) {
+        if(usersList[i].username === req.body.username){
+           usersList[i][req.body.key] = req.body.newValue;
+        }
+    }
+    res.json(usersList);
+})
+
 
 module.exports = users;
