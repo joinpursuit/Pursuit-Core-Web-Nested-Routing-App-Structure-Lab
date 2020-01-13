@@ -48,11 +48,7 @@ recipes.post("/", (req, res) => {
 })
 
 recipes.delete("/", (req, res) => {
-    for(let i = 0; i < recipeList.length; i++){
-        if(recipeList[i].name === req.body.name){
-            recipeList.splice(i,1)
-        }
-    }
+    recipeList = recipeList.filter(el => el.name !== req.body.name)
     res.json(recipeList)
 })
 
