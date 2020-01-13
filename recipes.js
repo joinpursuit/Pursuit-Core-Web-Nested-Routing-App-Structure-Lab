@@ -38,14 +38,15 @@ recipes.post("/newRecipes", (req, res)=>{
     
 
 recipes.patch("/:recipe", (req, res)=>{
-    res.json("Updated recipe" + req.params.id)
+    res.send("Updated recipe" + req.params.id)
 })
 
-recipes.delete("/:name", (req, res)=>{
+recipes.delete("/delete/:name", (req, res)=>{
+    
     let element = parseInt(req.params.id)
     let arr 
     for(let i = 0; i< allRecipes.data; i++){
-        if(element === this.allRecipes.data[i].id){
+        if(element === allRecipes.data[i].id){
             arr = recipes.data[i]
             recipes.data.splice(i,1)
         }

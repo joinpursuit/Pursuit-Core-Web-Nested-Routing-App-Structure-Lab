@@ -59,7 +59,7 @@ res.json(allUsers)
 })
 
 users.get("/dateActivated", (req, res)=>{
-    let date = req.params.date;
+    let date = req.params.dateActivated;
     let output = allUsers.filter(user => {
         return user.dateActivated.includes(date)
     })
