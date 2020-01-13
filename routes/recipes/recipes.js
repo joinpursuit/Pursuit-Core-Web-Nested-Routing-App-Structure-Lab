@@ -19,6 +19,14 @@ let recipeList = [
         ],
         directions: "Toast bread, spread peanut butter on half and jelly on the other. Press together and cut PB&J sandwich in half."
     },
+    {
+        name: "Choco-Chip Cookies",
+        ingredients: [
+            "cookie dough",
+            "chocolate chips",
+        ],
+        directions: "Mix dough and choco-chips. Bake at 350 degrees in oven for 15 minutes."
+    }
 ];
 
 recipes.get("/", (req, res) => {
@@ -51,11 +59,10 @@ recipes.delete("/", (req, res) => {
 recipes.patch("/", (req, res) => {
     for(let i = 0; i < recipeList.length; i++) {
         if(recipeList[i].name === req.body.name){
-            if(req.body.parameter === "ingredients"){
-                recipeList[i][req.body.parameter] = req.body.newElement;
-            }
+            req.body.key === "ingredients" ? recipeList[i].ingredients.push(req.body.newValue) : recipeList[i][req.body.key] = req.body.newValue;
         }
     }
+    res.json(recipeList);
 })
 
 
