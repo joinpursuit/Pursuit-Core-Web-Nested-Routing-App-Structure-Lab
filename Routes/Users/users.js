@@ -20,7 +20,7 @@ users.post("/", (req, res)=>{
     usersArr.push(req.body);
     res.json({
         status: 200,
-        message: "added a new recipe",
+        message: "added a new users",
         newUser: req.body
     })
 });
@@ -30,12 +30,15 @@ users.delete("/", (req, res)=>{
     res.json(usersArr)
 })
 
-// users.patch("/", (req, res)=>{
-//     for(i = 0; usersArr.length; i++){
-//         if(usersArr[i].id === req.body.id){
-//             if
-//         }
-//     }
-// })
+users.patch("/",(req, res)=>{
+
+    for(let i = 0; i < usersArr.length; i++){
+        if(usersArr[i].id === req.body.id){
+        usersArr[i] = req.body;
+        }
+    }
+    console.log(req.body)
+    res.json(usersArr)
+})
 
 module.exports = users

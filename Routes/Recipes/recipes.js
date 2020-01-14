@@ -54,7 +54,7 @@ recipes.post("/", (req, res) => {
 })
 
 recipes.patch("/",(req, res)=>{
-    for(i = 0; i < recipesArr.length; i++){
+    for(let i = 0; i < recipesArr.length; i++){
         if(recipesArr[i].id === req.body.id){
             if(req.body.params === "ingredients"){
                 recipesArr[i].ingredients.push(req.body.newItem);
