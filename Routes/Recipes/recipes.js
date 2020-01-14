@@ -63,12 +63,13 @@ recipes.patch("/",(req, res)=>{
             }
         }
     }
-    console.log(req.body)
     res.json(recipesArr)
 })
 
 
 recipes.delete("/", (req, res)=>{
+    recipesArr = recipesArr.filter(el => el.name !== req.body.name)
+    res.json(recipesArr)
 
 })
 
