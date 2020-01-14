@@ -59,7 +59,7 @@ recipes.patch("/",(req, res)=>{
             if(req.body.params === "ingredients"){
                 recipesArr[i].ingredients.push(req.body.newItem);
             }else{
-                recipesArr[i][req.body.params] = req.body.newItem;
+                recipesArr[i] = req.body;
             }
         }
     }

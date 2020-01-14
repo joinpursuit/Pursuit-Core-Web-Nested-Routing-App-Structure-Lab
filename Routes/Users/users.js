@@ -32,7 +32,7 @@ users.delete("/", (req, res)=>{
 
 users.patch("/",(req, res)=>{
 
-    for(let i = 0; i < usersArr.length; i++){
+    for(let i = 0; usersArr.length; i++){
         if(usersArr[i].id === req.body.id){
         usersArr[i] = req.body;
         }
