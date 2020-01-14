@@ -25,6 +25,11 @@ users.post("/", (req, res)=>{
     })
 });
 
+users.delete("/", (req, res)=>{
+    usersArr = usersArr.filter(el => el.username !== req.body.username);
+    res.json(usersArr)
+})
+
 // users.patch("/", (req, res)=>{
 //     for(i = 0; usersArr.length; i++){
 //         if(usersArr[i].id === req.body.id){
