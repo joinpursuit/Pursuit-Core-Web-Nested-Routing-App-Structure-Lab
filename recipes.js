@@ -19,7 +19,7 @@ recipes.get("/", (req, res)=>{
     res.json(allRecipes)
 })
 
-recipes.post("/newRecipes", (req, res)=>{
+recipes.post("/newRecipes", ()=>{
     let newRecipe ={
         name:req.params.name,
         ingredients:req.params.ingredients,
@@ -37,25 +37,57 @@ recipes.post("/newRecipes", (req, res)=>{
     })
     
 
-recipes.patch("/:recipe", (req, res)=>{
-    res.send("Updated recipe" + req.params.id)
+// recipes.patch("/:recipe", (req, res)=>{
+//     res.send("Updated recipe" + req.params.name)
+// })
+
+recipes.delete("/:name", (request, response)=>{
+    let {name} = request.params
+    recipes = recipes.filter(recipe=>recipe.name !== name)
+    response.status(200).json({
+        message: "recipeDeleted",
+        remainingRecipes: recipes
+    })
+
 })
 
-recipes.delete("/delete/:name", (req, res)=>{
-    
-    let element = parseInt(req.params.id)
-    let arr 
-    for(let i = 0; i< allRecipes.data; i++){
-        if(element === allRecipes.data[i].id){
-            arr = recipes.data[i]
-            recipes.data.splice(i,1)
-        }
+recipes.post("/add", (request,response)=>{
+    let res = request.body
+request.body.ingredients = request.body.ingredients.split("")
+ 
+    if(request.body.ingredients && request.body.name && request.body.directions){
+        console.log(res)
+        recipes.push(request.body)
+        res.status(200),json({
+            message:"success",
+            data: request.body
+        })
+    } else{
+        res.status(400).json({
+            message: "something went wrong"
+        })
 
     }
-    res.json(arr)
+    
+
 })
+recipes.patch("/update/:name", (request,response)=>{
+    //request.params.name
+    let {name} = request.params
+    console.log(name)
+    allRecipes.forEach(recipe =>{
+        if(name === recipe.name){
+            recipe = request.body
+        }
+    })
+    response.status(200).json({
+        message:"recipe updated",
+        newRecipe: request.body
+    })
+    console.log(request.body)
 
 
+})
 recipes.get("/:ingredient", (req, res)=>{
     let ingredient = req.params.ingredient;
     let output = allRecipes.filter(recipe => {
