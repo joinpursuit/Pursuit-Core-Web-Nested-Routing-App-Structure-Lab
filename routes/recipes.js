@@ -2,7 +2,6 @@ const express = require('express')
 const recipeRoutes = express.Router()
 const bodyParser = require('body-parser')
 
-
 const recipes = [{
         id: 1,
         name: "Pho",
@@ -35,7 +34,7 @@ const recipes = [{
     },
     {
         id: 2,
-        name: "Grilled Cheese",
+        name: "Grilled_Cheese",
         ingredients: [
             "Bread",
             "Cheese",
@@ -55,14 +54,25 @@ recipeRoutes.get("/:id", (req, res) => {
 
 recipeRoutes.post("/", (req, res) => {
     console.log(req)
-    recipesArr.push(req.body)
-    res.json([recipes, req.body])
+    recipes.push(req.body)
+    res.json({New_Recipe: req.body, Recipe_List: recipes})
 })
 
-recipeRoutes.delete("/:id", (req, res) => {
-    recipesArr.splice(req.params.id, 1)
-    res.json(recipes)
-})
+// recipeRoutes.delete("/:recipeName", (req, res) => {
+//     try{
+//     recipes.forEach(recipe => {
+//         if (req.params.recipeName === recipe["name"]) {
+//             recipes.splice(recipe, 1)
+//             res.json(recipes)
+//         } else {
+//             throw "Recipe does not exist!"
+//         }
+//     } 
+//     catch (error){
+//         res.send(error)
+//     }
+//     }
+// })
 
 recipeRoutes.put("/:id", (req, res) => {
     recipes[req.params.id] = req.body;
@@ -70,7 +80,7 @@ recipeRoutes.put("/:id", (req, res) => {
 })
 
 recipeRoutes.get("/ingredients/:ingredient", (req, res) => {
-    console.log("req = "+req.params.ingredient)
+    console.log(req.params.ingredient)
     let output = recipes.filter(recipe => {
         for (let j = 0; j < recipe.ingredients.length; j++) {
             if (recipe.ingredients[j].toLowerCase() === req.params.ingredient.toLowerCase()) {
