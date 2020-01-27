@@ -5,42 +5,47 @@ let users = [{
     username: "user1234",
     email: "user1234@gmail.com",
     activationDate: "January 1, 1970"
+    },
+    {
+    username: "user666",
+    email: "user666@gmail.com",
+    activationDate: "June 6, 1966"
     }
 ]
 
 userRoutes.get("/", (req, res) => {
-    res.json(usersArr)
+    res.json(users)
 })
 
 userRoutes.get("/:id", (req, res) => {
-    res.json(usersArr[req.params.id])
+    res.json(users[req.params.id])
 })
 
 userRoutes.post("/", (req, res) => {
     console.log(req)
-    usersArr.push(req.body)
-    res.json([usersArr, req.body])
+    users.push(req.body)
+    res.json({New_User: req.body, Updated_User_List: users})
 })
 
 userRoutes.delete("/:id", (req, res) => {
-    usersArr.splice(req.params.id, 1)
-    res.json(usersArr)
+    users.splice((req.params.id + 1), 1)
+    res.json({Updated_User_List: users})
 })
 
 userRoutes.put(":/id", (req, res) => {
-    usersArr[req.params.id] = req.body
-    res.json(usersArr[req.params.id])
+    users[req.params.id + 1] = req.body
+    res.json(users[req.params.id + 1])
 })
 
 userRoutes.get("/date/:min/:max", (req, res) => {
-    console.log(req.params.min)
-    let output = usersArr.filter(user => {
-        let dateCreated = new Date(user.activationDate)
-        if (req.params.min < dateCreated.getFullYear() && dateCreated.getFullYear() < req.params.max) {
+    let userFilter = users.filter(user => {
+        let date = new Date(user["activationDate"])
+        console.log(date.getFullYear())
+        if (req.params.min < date.getFullYear() && date.getFullYear() < req.params.max) {
             return user
         }
     })
-    res.json(output)
+    res.json(userFilter)
 })
 
 module.exports = userRoutes;
