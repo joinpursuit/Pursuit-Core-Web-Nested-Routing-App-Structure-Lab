@@ -37,15 +37,5 @@ userRoutes.put(":/id", (req, res) => {
     res.json(users[req.params.id + 1])
 })
 
-userRoutes.get("/date/:min/:max", (req, res) => {
-    let userFilter = users.filter(user => {
-        let date = new Date(user["activationDate"])
-        console.log(date.getFullYear())
-        if (req.params.min < date.getFullYear() && date.getFullYear() < req.params.max) {
-            return user
-        }
-    })
-    res.json(userFilter)
-})
 
 module.exports = userRoutes;
